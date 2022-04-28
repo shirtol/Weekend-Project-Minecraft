@@ -1,8 +1,21 @@
 import { gameBoard } from "./gameBoard.js";
 
+// tools constructor
+const Tools = function () {
+    this.axe = document.querySelector('[data-toolType="axe"]');
+    this.pickaxe = document.querySelector('[data-toolType="pickaxe"]');
+    this.shovel = document.querySelector('[data-toolType="shovel"]');
+};
+
 // gameState holds all the element we need for the game
 const gameState = {
+    gameBoard: gameBoard,
     container: document.querySelector(".container"),
+    inventory: {
+        stack: [],
+        element: document.querySelector(".inventory"),
+    },
+    tools: new Tools(),
     getTiles: () => document.querySelectorAll(".tile"),
 };
 
@@ -11,27 +24,30 @@ const gameBoardTiles = {
     0: "sky",
     1: "cloud",
     2: "leaves",
-    3: "rock",
-    4: "wood",
-    5: "grass",
-    6: "dirt",
+    4: "rock",
+    8: "wood",
+    16: "grass",
+    32: "dirt",
 };
 
 // create gameBoard:
-const draw = (mat, { container }) => {
-    for (let i = 0; i < mat.length; i++) {
-        const rowLength = mat[i].length;
+const draw = ({ gameBoard, container }) => {
+    for (let row = 0; row < gameBoard.length; row++) {
+        const rowLength = gameBoard[row].length;
         // console.log(rowLength);
-        for (let j = 0; j < rowLength; j++) {
+        for (let col = 0; col < rowLength; col++) {
             const tile = document.createElement("div");
-            tile.setAttribute("data-type", gameBoardTiles[mat[i][j]]);
+            tile.setAttribute("data-type", gameBoardTiles[gameBoard[row][col]]);
+            tile.setAttribute("data-positionCol", col);
+            tile.setAttribute("data-positionRow", row);
             tile.classList.add("tile");
+            tile.classList.add("center-img");
             container.appendChild(tile);
         }
     }
 };
 
-draw(gameBoard, gameState);
+draw(gameState);
 
 // create an event: clicking on a tile will change the background image.
 // const changeDataType = (e) => {
@@ -42,15 +58,57 @@ draw(gameBoard, gameState);
 //     }
 // };
 
+// get tile data
+const getTileData = (tile) => {
+    const currDataType = tile.getAttribute("data-type");
+    const currPositionCol = tile.getAttribute("data-positionCol");
+    const currPositionRow = tile.getAttribute("data-positionRow");
+
+    return [currDataType, currPositionCol, currPositionRow];
+};
+
+// add tile to inventory
+const addToInventory = (inventory, data) => {
+    inventory.stack.push(data);
+    inventory.element.setAttribute("data-type", data);
+};
+
 // garb a tile from the board:
-const mineTile = (e) => {
-    let currDataType = e.target.getAttribute("data-type");
+const mineTile = (e, { inventory, gameBoard }) => {
+    const [currDataType, currPositionCol, currPositionRow] = getTileData(
+        e.target
+    );
+
     if (currDataType !== "cloud") {
-        e.target.removeAttribute("data-type");
+        if (currDataType !== "sky") {
+            //add to inventory stack
+            addToInventory(inventory, currDataType);
+        }
+
+        gameBoard[currPositionRow][currPositionCol] = 0;
+        e.target.setAttribute("data-type", "sky");
     }
 };
 
 gameState.getTiles().forEach((tile) => {
-    // console.log(tile);
-    tile.addEventListener("click", mineTile);
+    tile.addEventListener("click", (e) => mineTile(e, gameState));
 });
+
+// reset highlight
+const resetHighlight = ({ tools }) => {
+    for (const tool of Object.values(tools)) {
+        tool.style.borderColor = "#fff";
+    }
+};
+
+// highlight tools when clicked
+const highlightTool = ({ tools }, selectedTool) => {
+    resetHighlight({ tools });
+    selectedTool.style.borderColor = "yellow";
+};
+
+for (const tool of Object.values(gameState.tools)) {
+    tool.addEventListener("click", (e) => {
+        highlightTool(gameState, e.target);
+    });
+}
