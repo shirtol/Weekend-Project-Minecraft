@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+/* style the container */
+.container {
+    width: 80%;
+    height: 100vh;
+    background-color: #8dbfff;
+    display: grid;
+    grid-template-columns: repeat(27, 1fr);
+    /* grid-template-rows: 1fr; */
+}
+
+/* style each tile */
+.tile {
+    /* border: 1px solid black; */
+}
+
+/* style each tile type with different background image / color */
+[data-type="sky"] {
+    background: #8dbfff;
+}
+
+[data-type="cloud"] {
+    background: #fff;
+}
+
+[data-type="leaves"] {
+    background-image: url("./assets/img/leaves.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+[data-type="rock"] {
+    background-image: url("./assets/img/rock.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+[data-type="wood"] {
+    background-image: url("./assets/img/wood.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+[data-type="grass"] {
+    background-image: url("./assets/img/grass.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+[data-type="dirt"] {
+    background-image: url("./assets/img/dirt.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
