@@ -60,15 +60,6 @@ const draw = ({ gameBoard, container }) => {
 
 draw(gameState);
 
-// create an event: clicking on a tile will change the background image.
-// const changeDataType = (e) => {
-//     let currDataType = e.target.getAttribute("data-type");
-//     // console.log(currDataType);
-//     if (currDataType === "grass") {
-//         e.target.setAttribute("data-type", "rock");
-//     }
-// };
-
 // get tile data
 const getTileData = (tile) => {
     const currDataType = tile.getAttribute("data-type");
@@ -132,7 +123,7 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
             e.target.setAttribute("data-type", "sky");
         }
     }
-    // console.log(validTile);
+    console.log(inventory.stack);
 };
 
 gameState.getTiles().forEach((tile) => {
@@ -171,4 +162,39 @@ for (const tool of Object.values(gameState.tools)) {
     });
 }
 
-// console.log(gameState.validTile);
+// get the last tile from inventory
+const getLastTile = (inventory) => inventory.stack[inventory.stack.length - 1];
+
+// use tile from inventory and build it in game board
+const buildTile = (e, { gameBoard, inventory }) => {
+    const inventoryLastTile = getLastTile(inventory);
+    const tileNumber = Object.keys(gameBoardTiles).find(
+        (tileNum) => gameBoardTiles[tileNum] === inventoryLastTile
+    );
+    const [currDataType, currPositionCol, currPositionRow] = getTileData(
+        e.target
+    );
+    if (currDataType === "sky" || currDataType === "cloud") {
+        gameBoard[currPositionRow][currPositionCol] = tileNumber;
+        e.target.setAttribute("data-type", inventoryLastTile);
+    }
+};
+
+gameState.getTiles().forEach((tile) => {
+    tile.addEventListener("click", (e) => buildTile(e, gameState));
+});
+
+// remove the last tile from inventory
+const removeLastTile = ({ inventory }) => {
+    const tileToRemove = inventory.stack.pop();
+    inventory.element.setAttribute(
+        "data-type",
+        inventory.stack[inventory.stack.length - 1]
+    );
+    console.log(tileToRemove);
+    return tileToRemove;
+};
+
+gameState.tools.build.addEventListener("click", (e) => {
+    removeLastTile(gameState);
+});
