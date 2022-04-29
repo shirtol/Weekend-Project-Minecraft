@@ -1,12 +1,25 @@
 // gameBoard is a matrix which represent the board by numbers.
-/*
-    0: "sky",
-    1: "cloud",
-    2: "leaves",
-    4: "rock",
-    8: "wood",
-    16: "grass",
-    32: "dirt",
+/** 
+ * @description
+ * This game board represent the values of each tile on the board. 
+ * When the user mine/build tile the number in this matrix will change using bitwise operations.
+ * All values should be power of 2, intermediate values will be present because of bitwise operations.
+ * @values 
+    0: sky
+
+    1: cloud
+
+    2 / 3: leaves
+
+    4 / 5: rock
+
+    8 / 9: wood
+
+    16 / 17: grass
+
+    32 / 33: dirt
+
+
 */
 export const gameBoard = [
     [

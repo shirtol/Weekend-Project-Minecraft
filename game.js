@@ -60,7 +60,11 @@ const draw = ({ gameBoard, container }) => {
 
 draw(gameState);
 
-// get tile data
+/**
+ * @description get tile data
+ * @param {Node} tile
+ * @returns {[string, string, string]}
+ */
 const getTileData = (tile) => {
     const currDataType = tile.getAttribute("data-type");
     const currPositionCol = tile.getAttribute("data-positionCol");
@@ -79,34 +83,42 @@ const addToInventory = (inventory, data) => {
 const isFirstRow = (tileRow) => tileRow === 0;
 
 // check if tile has sky from bottom
-const hasSkyBottom = (gameBoard, tileRow, tileCol) =>
-    tileRow !== gameBoard.length - 1 && gameBoard[tileRow + 1][tileCol] === 0;
+const hasEmptyBottom = (gameBoard, tileRow, tileCol) =>
+    tileRow !== gameBoard.length - 1 &&
+    gameBoard[tileRow + 1][tileCol] in [0, 1];
 
 // check if tile has sky from top
-const hasSkyTop = (gameBoard, tileRow, tileCol) =>
-    !isFirstRow(tileRow) && gameBoard[tileRow - 1][tileCol] === 0;
+const hasEmptyTop = (gameBoard, tileRow, tileCol) =>
+    !isFirstRow(tileRow) && gameBoard[tileRow - 1][tileCol] in [0, 1];
 
 // check if tile has sky from left
-const hasSkyLeft = (gameBoard, tileRow, tileCol) =>
-    gameBoard[tileRow][tileCol - 1] === 0;
+const hasEmptyLeft = (gameBoard, tileRow, tileCol) =>
+    gameBoard[tileRow][tileCol - 1] in [0, 1];
 
 // check if tile has sky from right
-const hasSkyRight = (gameBoard, tileRow, tileCol) =>
+const hasEmptyRight = (gameBoard, tileRow, tileCol) =>
     gameBoard[tileRow][tileCol + 1] === 0;
 
 // check if the user can mine the tile
 const canMine = (gameBoard, tileRow, tileCol) =>
     isFirstRow(tileRow) ||
-    hasSkyBottom(gameBoard, tileRow, tileCol) ||
-    hasSkyTop(gameBoard, tileRow, tileCol) ||
-    hasSkyRight(gameBoard, tileRow, tileCol) ||
-    hasSkyLeft(gameBoard, tileRow, tileCol);
+    hasEmptyBottom(gameBoard, tileRow, tileCol) ||
+    hasEmptyTop(gameBoard, tileRow, tileCol) ||
+    hasEmptyRight(gameBoard, tileRow, tileCol) ||
+    hasEmptyLeft(gameBoard, tileRow, tileCol);
+
+// get tile number from gameBoardTiles object
+const getTileNumber = (dataType) =>
+    Object.keys(gameBoardTiles).find(
+        (tileNum) => gameBoardTiles[tileNum] === dataType
+    );
 
 // garb a tile from the board:
 const mineTile = (e, { inventory, gameBoard, validTile }) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
+    const tileNumber = getTileNumber(currDataType);
     if (currDataType !== "cloud") {
         if (
             currDataType !== "sky" &&
@@ -119,11 +131,15 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
         ) {
             //add to inventory stack
             addToInventory(inventory, currDataType);
-            gameBoard[currPositionRow][currPositionCol] = 0;
-            e.target.setAttribute("data-type", "sky");
+            console.log(gameBoard[currPositionRow][currPositionCol]);
+            gameBoard[currPositionRow][currPositionCol] -= tileNumber;
+            console.log(gameBoard[currPositionRow][currPositionCol]);
+            e.target.setAttribute(
+                "data-type",
+                gameBoardTiles[gameBoard[currPositionRow][currPositionCol]]
+            );
         }
     }
-    console.log(inventory.stack);
 };
 
 // get the last tile from inventory
@@ -132,14 +148,16 @@ const getLastTile = (inventory) => inventory.stack[inventory.stack.length - 1];
 // use tile from inventory and build it in game board
 const buildTile = (e, { gameBoard, inventory }) => {
     const inventoryLastTile = getLastTile(inventory);
-    const tileNumber = Object.keys(gameBoardTiles).find(
-        (tileNum) => gameBoardTiles[tileNum] === inventoryLastTile
-    );
+    const tileNum = getTileNumber(inventoryLastTile);
+
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
+
     if (currDataType === "sky" || currDataType === "cloud") {
-        gameBoard[currPositionRow][currPositionCol] = tileNumber;
+        console.log(gameBoard[currPositionRow][currPositionCol]);
+        gameBoard[currPositionRow][currPositionCol] |= tileNum;
+        console.log(gameBoard[currPositionRow][currPositionCol]);
         e.target.setAttribute("data-type", inventoryLastTile);
         removeLastTile(gameState);
     }
@@ -190,9 +208,9 @@ const getTileFromTool = ({ tools }, selectedTool) => {
     // console.log(gameState.validTile);
 };
 
-gameState.tools.build.addEventListener("click", (e) => {
-    removeLastTile(gameState);
-});
+// gameState.tools.build.addEventListener("click", (e) => {
+//     removeLastTile(gameState);
+// });
 
 for (const tool of Object.values(gameState.tools)) {
     tool.addEventListener("click", (e) => {
