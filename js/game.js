@@ -26,7 +26,7 @@ const gameState = {
 const gameBoardTiles = {
     0: "sky",
     1: "cloud",
-    2: "leaves",
+    2: "leaf",
     4: "rock",
     8: "wood",
     16: "grass",
@@ -35,7 +35,7 @@ const gameBoardTiles = {
 
 // Object tht holds the tool-tile couples:
 const toolTileCouples = {
-    axe: ["wood", "leaves"],
+    axe: ["wood", "leaf"],
     pickaxe: ["rock"],
     shovel: ["grass", "dirt"],
     build: ["sky"],

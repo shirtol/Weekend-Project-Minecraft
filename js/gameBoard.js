@@ -9,7 +9,7 @@
 
     1: cloud
 
-    2 / 3: leaves
+    2 / 3: leaf
 
     4 / 5: rock
 

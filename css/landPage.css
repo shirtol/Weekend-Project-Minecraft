@@ -40,3 +40,29 @@ html {
     cursor: pointer;
     font-weight: 700;
 }
+
+.how-to-play {
+    width: 40%;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 2.5rem;
+    z-index: 10;
+    display: none;
+    position: absolute;
+    background: #777;
+    padding: 4rem;
+
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+        rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    opacity: 0.9;
+    animation: fade 1s linear;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}

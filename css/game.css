@@ -49,8 +49,8 @@ html {
     background: #fff;
 }
 
-[data-type="leaves"] {
-    background-image: url("../assets/img/leaves.webp");
+[data-type="leaf"] {
+    background-image: url("../assets/img/leaf.webp");
 }
 
 [data-type="rock"] {
