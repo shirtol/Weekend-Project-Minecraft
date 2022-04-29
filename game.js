@@ -35,7 +35,7 @@ const gameBoardTiles = {
 
 // Object tht holds the tool-tile couples:
 const toolTileCouples = {
-    axe: ["wood"],
+    axe: ["wood", "leaves"],
     pickaxe: ["rock"],
     shovel: ["grass", "dirt"],
     build: ["sky"],
@@ -84,9 +84,32 @@ const addToInventory = (inventory, data) => {
     inventory.element.setAttribute("data-type", data);
 };
 
+//check if tile is in the first row
+const isFirstRow = (tileRow) => tileRow === 0;
+
+// check if tile has sky from bottom
+const hasSkyBottom = (gameBoard, tileRow, tileCol) =>
+    tileRow !== gameBoard.length - 1 && gameBoard[tileRow + 1][tileCol] === 0;
+
+// check if tile has sky from top
+const hasSkyTop = (gameBoard, tileRow, tileCol) =>
+    !isFirstRow(tileRow) && gameBoard[tileRow - 1][tileCol] === 0;
+
+// check if tile has sky from left
+const hasSkyLeft = (gameBoard, tileRow, tileCol) =>
+    gameBoard[tileRow][tileCol - 1] === 0;
+
+// check if tile has sky from right
+const hasSkyRight = (gameBoard, tileRow, tileCol) =>
+    gameBoard[tileRow][tileCol + 1] === 0;
+
 // check if the user can mine the tile
-const canMine = ({ gameBoard }, tileRow, tileCol) =>
-    gameBoard[parseInt(tileRow - 1)][parseInt(tileCol)] === 0;
+const canMine = (gameBoard, tileRow, tileCol) =>
+    isFirstRow(tileRow) ||
+    hasSkyBottom(gameBoard, tileRow, tileCol) ||
+    hasSkyTop(gameBoard, tileRow, tileCol) ||
+    hasSkyRight(gameBoard, tileRow, tileCol) ||
+    hasSkyLeft(gameBoard, tileRow, tileCol);
 
 // garb a tile from the board:
 const mineTile = (e, { inventory, gameBoard, validTile }) => {
@@ -97,7 +120,11 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
         if (
             currDataType !== "sky" &&
             validTile.indexOf(currDataType) !== -1 &&
-            canMine({ gameBoard }, currPositionRow, currPositionCol)
+            canMine(
+                gameBoard,
+                parseInt(currPositionRow),
+                parseInt(currPositionCol)
+            )
         ) {
             //add to inventory stack
             addToInventory(inventory, currDataType);
@@ -105,6 +132,7 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
             e.target.setAttribute("data-type", "sky");
         }
     }
+    // console.log(validTile);
 };
 
 gameState.getTiles().forEach((tile) => {
