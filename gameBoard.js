@@ -1,4 +1,13 @@
 // gameBoard is a matrix which represent the board by numbers.
+/*
+    0: "sky",
+    1: "cloud",
+    2: "leaves",
+    4: "rock",
+    8: "wood",
+    16: "grass",
+    32: "dirt",
+*/
 export const gameBoard = [
     [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

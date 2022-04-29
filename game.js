@@ -5,6 +5,7 @@ const Tools = function () {
     this.axe = document.querySelector('[data-toolType="axe"]');
     this.pickaxe = document.querySelector('[data-toolType="pickaxe"]');
     this.shovel = document.querySelector('[data-toolType="shovel"]');
+    this.build = document.querySelector('[data-toolType="build"]');
 };
 
 // gameState holds all the element we need for the game
@@ -16,6 +17,8 @@ const gameState = {
         element: document.querySelector(".inventory"),
     },
     tools: new Tools(),
+    selectedTool: null,
+    validTile: [],
     getTiles: () => document.querySelectorAll(".tile"),
 };
 
@@ -28,6 +31,14 @@ const gameBoardTiles = {
     8: "wood",
     16: "grass",
     32: "dirt",
+};
+
+// Object tht holds the tool-tile couples:
+const toolTileCouples = {
+    axe: ["wood"],
+    pickaxe: ["rock"],
+    shovel: ["grass", "dirt"],
+    build: ["sky"],
 };
 
 // create gameBoard:
@@ -74,19 +85,18 @@ const addToInventory = (inventory, data) => {
 };
 
 // garb a tile from the board:
-const mineTile = (e, { inventory, gameBoard }) => {
+const mineTile = (e, { inventory, gameBoard, validTile }) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
 
     if (currDataType !== "cloud") {
-        if (currDataType !== "sky") {
+        if (currDataType !== "sky" && validTile.indexOf(currDataType) !== -1) {
             //add to inventory stack
             addToInventory(inventory, currDataType);
+            gameBoard[currPositionRow][currPositionCol] = 0;
+            e.target.setAttribute("data-type", "sky");
         }
-
-        gameBoard[currPositionRow][currPositionCol] = 0;
-        e.target.setAttribute("data-type", "sky");
     }
 };
 
@@ -107,8 +117,21 @@ const highlightTool = ({ tools }, selectedTool) => {
     selectedTool.style.borderColor = "yellow";
 };
 
+//validate tool and tile couple
+const getTileFromTool = ({ tools }, selectedTool) => {
+    const toolName = Object.keys(tools).find(
+        (toolType) => tools[toolType] === selectedTool
+    );
+
+    // console.log(toolName);
+    gameState.validTile = toolTileCouples[toolName];
+    gameState.selectedTool = toolName;
+    // console.log(gameState.validTile);
+};
+
 for (const tool of Object.values(gameState.tools)) {
     tool.addEventListener("click", (e) => {
         highlightTool(gameState, e.target);
+        getTileFromTool(gameState, e.target);
     });
 }
