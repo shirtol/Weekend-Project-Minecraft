@@ -84,14 +84,21 @@ const addToInventory = (inventory, data) => {
     inventory.element.setAttribute("data-type", data);
 };
 
+// check if the user can mine the tile
+const canMine = ({ gameBoard }, tileRow, tileCol) =>
+    gameBoard[parseInt(tileRow - 1)][parseInt(tileCol)] === 0;
+
 // garb a tile from the board:
 const mineTile = (e, { inventory, gameBoard, validTile }) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
-
     if (currDataType !== "cloud") {
-        if (currDataType !== "sky" && validTile.indexOf(currDataType) !== -1) {
+        if (
+            currDataType !== "sky" &&
+            validTile.indexOf(currDataType) !== -1 &&
+            canMine({ gameBoard }, currPositionRow, currPositionCol)
+        ) {
             //add to inventory stack
             addToInventory(inventory, currDataType);
             gameBoard[currPositionRow][currPositionCol] = 0;
@@ -135,3 +142,5 @@ for (const tool of Object.values(gameState.tools)) {
         getTileFromTool(gameState, e.target);
     });
 }
+
+// console.log(gameState.validTile);

@@ -17,9 +17,16 @@ html {
     grid-template-columns: repeat(27, 1fr);
 }
 
+/* TODO: fix gap between tiles */
 /* style each tile */
 .tile {
-    /* border: 1px solid black; */
+    /* border: 0.3px solid transparent;
+    overflow: hidden;
+    display: block; */
+}
+.tile:hover {
+    /* border-color: #fff; */
+    /* margin: -2px; */
 }
 
 /* center image style */
