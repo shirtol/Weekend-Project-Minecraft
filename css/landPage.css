@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: mineCraft;
+    src: url(../assets/fonts/Minecraft.ttf);
+}
+
+html {
+    font-size: 62.5%;
+    font-family: mineCraft;
+}
+
+.container {
+    background: url("../assets/img/landPage.png");
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 50%;
+    height: 50%;
+}
+
+.btn {
+    font-size: 3rem;
+    border: 2px solid black;
+    width: max-content;
+    margin: 2rem;
+    padding: 1rem;
+    cursor: pointer;
+    /* background-color: #333; */
+    /* opacity: 0.8; */
+    font-weight: 700;
+}

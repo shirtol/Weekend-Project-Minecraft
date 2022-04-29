@@ -46,20 +46,20 @@ html {
 }
 
 [data-type="leaves"] {
-    background-image: url("./assets/img/leaves.webp");
+    background-image: url("../assets/img/leaves.webp");
 }
 
 [data-type="rock"] {
-    background-image: url("./assets/img/rock.png");
+    background-image: url("../assets/img/rock.png");
 }
 [data-type="wood"] {
-    background-image: url("./assets/img/wood.jpg");
+    background-image: url("../assets/img/wood.jpg");
 }
 [data-type="grass"] {
-    background-image: url("./assets/img/grass.jpg");
+    background-image: url("../assets/img/grass.jpg");
 }
 [data-type="dirt"] {
-    background-image: url("./assets/img/dirt.jpg");
+    background-image: url("../assets/img/dirt.jpg");
 }
 
 /* style the tools and inventory */
@@ -102,15 +102,15 @@ html {
 }
 
 [data-toolType="axe"] {
-    background-image: url("./assets/img/axe.webp");
+    background-image: url("../assets/img/axe.webp");
 }
 
 [data-toolType="pickaxe"] {
-    background-image: url("./assets/img/Pickaxe.webp");
+    background-image: url("../assets/img/Pickaxe.webp");
 }
 
 [data-toolType="shovel"] {
-    background-image: url("./assets/img/Shovel.webp");
+    background-image: url("../assets/img/Shovel.webp");
 }
 
 /* media query */
