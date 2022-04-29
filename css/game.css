@@ -4,8 +4,14 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: mineCraft;
+    src: url(../assets/fonts/Minecraft.ttf);
+}
+
 html {
     font-size: 62.5%;
+    font-family: mineCraft;
 }
 
 /* style the container */
@@ -20,13 +26,11 @@ html {
 /* TODO: fix gap between tiles */
 /* style each tile */
 .tile {
-    /* border: 0.3px solid transparent;
-    overflow: hidden;
-    display: block; */
+    outline: 1px solid transparent;
+    outline-offset: -1px;
 }
 .tile:hover {
-    /* border-color: #fff; */
-    /* margin: -2px; */
+    outline: 1px solid rgb(234, 234, 113);
 }
 
 /* center image style */
@@ -90,15 +94,37 @@ html {
     width: 10rem;
     height: 10rem;
     cursor: pointer;
+    position: relative;
 }
 
-.inventory {
+.tool::after {
+    content: attr(data-toolType);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+}
+
+.tool:hover,
+.inventory:hover {
+    border: 1px solid yellow;
+}
+
+.inventory,
+#refresh {
     border: 1px solid #fff;
     align-self: center;
     margin-top: 12rem;
     width: 5rem;
     height: 5rem;
     cursor: pointer;
+}
+
+.selected {
+    border: 1px solid blue;
 }
 
 [data-toolType="axe"] {
@@ -111,6 +137,28 @@ html {
 
 [data-toolType="shovel"] {
     background-image: url("../assets/img/Shovel.webp");
+}
+
+#refresh {
+    margin-top: 12rem;
+    width: 10rem;
+    height: 5rem;
+    color: #fff;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.fleshing-error {
+    animation: blink 0.2s step-end infinite alternate;
+}
+
+@keyframes blink {
+    50% {
+        border-color: red;
+    }
 }
 
 /* media query */
@@ -139,11 +187,21 @@ html {
         height: 5rem;
         align-self: center;
     }
-    .inventory {
+    .inventory,
+    #refresh {
         align-self: center;
         width: 3rem;
         height: 3rem;
         margin-top: 0;
         margin-left: 2rem;
+    }
+
+    #refresh {
+        width: 10rem;
+        font-size: 1rem;
+    }
+
+    .tool::after {
+        content: "";
     }
 }

@@ -45,7 +45,6 @@ const toolTileCouples = {
 const draw = ({ gameBoard, container }) => {
     for (let row = 0; row < gameBoard.length; row++) {
         const rowLength = gameBoard[row].length;
-        // console.log(rowLength);
         for (let col = 0; col < rowLength; col++) {
             const tile = document.createElement("div");
             tile.setAttribute("data-type", gameBoardTiles[gameBoard[row][col]]);
@@ -113,87 +112,102 @@ const getTileNumber = (dataType) =>
         (tileNum) => gameBoardTiles[tileNum] === dataType
     );
 
+const addToInventoryStack = (e, gameBoard, inventory) => {
+    const [currDataType, currPositionCol, currPositionRow] = getTileData(
+        e.target
+    );
+    const tileNumber = getTileNumber(currDataType);
+    addToInventory(inventory, currDataType);
+    gameBoard[currPositionRow][currPositionCol] -= tileNumber;
+    e.target.setAttribute(
+        "data-type",
+        gameBoardTiles[gameBoard[currPositionRow][currPositionCol]]
+    );
+};
+
+const displayErrorTool = ({ selectedTool, tools }) => {
+    tools[selectedTool].classList.add("fleshing-error");
+    setTimeout(
+        () => tools[selectedTool].classList.remove("fleshing-error"),
+        1000
+    );
+};
+
 // garb a tile from the board:
 const mineTile = (e, { inventory, gameBoard, validTile }) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
-    const tileNumber = getTileNumber(currDataType);
-    if (currDataType !== "cloud") {
-        if (
-            currDataType !== "sky" &&
-            validTile.indexOf(currDataType) !== -1 &&
-            canMine(
-                gameBoard,
-                parseInt(currPositionRow),
-                parseInt(currPositionCol)
-            )
-        ) {
-            //add to inventory stack
-            addToInventory(inventory, currDataType);
-            console.log(gameBoard[currPositionRow][currPositionCol]);
-            gameBoard[currPositionRow][currPositionCol] -= tileNumber;
-            console.log(gameBoard[currPositionRow][currPositionCol]);
-            e.target.setAttribute(
-                "data-type",
-                gameBoardTiles[gameBoard[currPositionRow][currPositionCol]]
-            );
+
+    if (currDataType !== "cloud" && currDataType !== "sky") {
+        if (validTile.indexOf(currDataType) !== -1) {
+            if (
+                canMine(
+                    gameBoard,
+                    parseInt(currPositionRow),
+                    parseInt(currPositionCol)
+                )
+            ) {
+                addToInventoryStack(e, gameBoard, inventory);
+            }
+        } else {
+            displayErrorTool(gameState);
         }
     }
 };
 
-// get the last tile from inventory
-const getLastTile = (inventory) => inventory.stack[inventory.stack.length - 1];
-
 // use tile from inventory and build it in game board
 const buildTile = (e, { gameBoard, inventory }) => {
-    const inventoryLastTile = getLastTile(inventory);
-    const tileNum = getTileNumber(inventoryLastTile);
+    if (inventory.stack.length > 0) {
+        const [currDataType, currPositionCol, currPositionRow] = getTileData(
+            e.target
+        );
 
-    const [currDataType, currPositionCol, currPositionRow] = getTileData(
-        e.target
-    );
-
-    if (currDataType === "sky" || currDataType === "cloud") {
-        console.log(gameBoard[currPositionRow][currPositionCol]);
-        gameBoard[currPositionRow][currPositionCol] |= tileNum;
-        console.log(gameBoard[currPositionRow][currPositionCol]);
-        e.target.setAttribute("data-type", inventoryLastTile);
-        removeLastTile(gameState);
+        if (currDataType === "sky" || currDataType === "cloud") {
+            const inventoryLastTile = removeLastTile(gameState);
+            gameBoard[currPositionRow][currPositionCol] |=
+                getTileNumber(inventoryLastTile);
+            e.target.setAttribute("data-type", inventoryLastTile);
+        }
     }
 };
 
 // remove the last tile from inventory
 const removeLastTile = ({ inventory }) => {
     const tileToRemove = inventory.stack.pop();
+
     inventory.element.setAttribute(
         "data-type",
         inventory.stack[inventory.stack.length - 1]
     );
-    console.log(tileToRemove);
-    // return tileToRemove;
+
+    return tileToRemove;
 };
 
 // handle tile click
 const handleTileClick = (e, { selectedTool }) => {
+    let selectedFunction;
+
     if (selectedTool === "build") {
-        buildTile(e, gameState);
+        selectedFunction = buildTile;
     } else {
-        mineTile(e, gameState);
+        selectedFunction = mineTile;
     }
+
+    selectedFunction(e, gameState);
 };
 
 // reset highlight
-const resetHighlight = ({ tools }) => {
+const resetHighlight = (tools) => {
     for (const tool of Object.values(tools)) {
-        tool.style.borderColor = "#fff";
+        tool.classList.remove("selected");
     }
 };
 
 // highlight tools when clicked
 const highlightTool = ({ tools }, selectedTool) => {
-    resetHighlight({ tools });
-    selectedTool.style.borderColor = "yellow";
+    resetHighlight(tools);
+    selectedTool.classList.add("selected");
 };
 
 //validate tool and tile couple
@@ -202,15 +216,9 @@ const getTileFromTool = ({ tools }, selectedTool) => {
         (toolType) => tools[toolType] === selectedTool
     );
 
-    // console.log(toolName);
     gameState.validTile = toolTileCouples[toolName];
     gameState.selectedTool = toolName;
-    // console.log(gameState.validTile);
 };
-
-// gameState.tools.build.addEventListener("click", (e) => {
-//     removeLastTile(gameState);
-// });
 
 for (const tool of Object.values(gameState.tools)) {
     tool.addEventListener("click", (e) => {
@@ -222,3 +230,8 @@ for (const tool of Object.values(gameState.tools)) {
 gameState.getTiles().forEach((tile) => {
     tile.addEventListener("click", (e) => handleTileClick(e, gameState));
 });
+
+document.querySelector("#refresh").addEventListener("click", (e) => {
+    window.location.reload();
+});
+console.log(gameBoard);
