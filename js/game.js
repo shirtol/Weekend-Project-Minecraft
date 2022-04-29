@@ -1,26 +1,8 @@
-import { gameBoard } from "./gameBoard.js";
+import { Tools } from "./Tools.js";
+import { Inventory } from "./Inventory.js";
+import { GameState } from "./GameState.js";
 
-// tools constructor
-const Tools = function () {
-    this.axe = document.querySelector('[data-toolType="axe"]');
-    this.pickaxe = document.querySelector('[data-toolType="pickaxe"]');
-    this.shovel = document.querySelector('[data-toolType="shovel"]');
-    this.build = document.querySelector('[data-toolType="build"]');
-};
-
-// gameState holds all the element we need for the game
-const gameState = {
-    gameBoard: gameBoard,
-    container: document.querySelector(".container"),
-    inventory: {
-        stack: [],
-        element: document.querySelector(".inventory"),
-    },
-    tools: new Tools(),
-    selectedTool: null,
-    validTile: [],
-    getTiles: () => document.querySelectorAll(".tile"),
-};
+const gameState = new GameState();
 
 // Object that holds the gameBoard tiles elements:
 const gameBoardTiles = {
@@ -41,18 +23,37 @@ const toolTileCouples = {
     build: ["sky"],
 };
 
-// create gameBoard:
+/**
+ *
+ * @param {string} tileType
+ * @param {number} row
+ * @param {number} col
+ * @returns {HTMLElement}
+ */
+const createTile = (tileType, row, col) => {
+    const tile = document.createElement("div");
+    tile.setAttribute("data-type", tileType);
+    tile.setAttribute("data-positionCol", col);
+    tile.setAttribute("data-positionRow", row);
+    tile.classList.add("tile");
+    tile.classList.add("center-img");
+
+    return tile;
+};
+
+/**
+ * @description create gameBoard:
+ * @param {Object} Obj
+ * @param {number[][]} Obj.gameBoard
+ * @param {Node} Obj.container
+ */
 const draw = ({ gameBoard, container }) => {
     for (let row = 0; row < gameBoard.length; row++) {
         const rowLength = gameBoard[row].length;
         for (let col = 0; col < rowLength; col++) {
-            const tile = document.createElement("div");
-            tile.setAttribute("data-type", gameBoardTiles[gameBoard[row][col]]);
-            tile.setAttribute("data-positionCol", col);
-            tile.setAttribute("data-positionRow", row);
-            tile.classList.add("tile");
-            tile.classList.add("center-img");
-            container.appendChild(tile);
+            container.appendChild(
+                createTile(gameBoardTiles[gameBoard[row][col]], row, col)
+            );
         }
     }
 };
@@ -62,43 +63,81 @@ draw(gameState);
 /**
  * @description get tile data
  * @param {Node} tile
- * @returns {[string, string, string]}
+ * @returns {[string, number, number]}
  */
 const getTileData = (tile) => {
     const currDataType = tile.getAttribute("data-type");
     const currPositionCol = tile.getAttribute("data-positionCol");
     const currPositionRow = tile.getAttribute("data-positionRow");
 
-    return [currDataType, currPositionCol, currPositionRow];
+    return [currDataType, parseInt(currPositionCol), parseInt(currPositionRow)];
 };
 
-// add tile to inventory
+/**
+ * @description add tile to inventory
+ * @param {Inventory} inventory
+ * @param {string} data
+ */
 const addToInventory = (inventory, data) => {
     inventory.stack.push(data);
     inventory.element.setAttribute("data-type", data);
 };
 
-//check if tile is in the first row
+/**
+ * @description check if tile is in the first row
+ * @param {number} tileRow
+ * @returns {boolean}
+ */
 const isFirstRow = (tileRow) => tileRow === 0;
 
-// check if tile has sky from bottom
+/**
+ * @description check if tile has sky from bottom
+ * @param {number[][]} gameBoard
+ * @param {number} tileRow
+ * @param {number} tileCol
+ * @returns {boolean}
+ */
 const hasEmptyBottom = (gameBoard, tileRow, tileCol) =>
     tileRow !== gameBoard.length - 1 &&
     gameBoard[tileRow + 1][tileCol] in [0, 1];
 
-// check if tile has sky from top
+/**
+ * @description check if tile has sky from top
+ * @param {number[][]} gameBoard
+ * @param {number} tileRow
+ * @param {number} tileCol
+ * @returns {boolean}
+ */
 const hasEmptyTop = (gameBoard, tileRow, tileCol) =>
     !isFirstRow(tileRow) && gameBoard[tileRow - 1][tileCol] in [0, 1];
 
-// check if tile has sky from left
+/**
+ * @description check if tile has sky from left
+ * @param {number[][]} gameBoard
+ * @param {number} tileRow
+ * @param {number} tileCol
+ * @returns {boolean}
+ */
 const hasEmptyLeft = (gameBoard, tileRow, tileCol) =>
     gameBoard[tileRow][tileCol - 1] in [0, 1];
 
-// check if tile has sky from right
+/**
+ * @description check if tile has sky from right
+ * @param {number[][]} gameBoard
+ * @param {number} tileRow
+ * @param {number} tileCol
+ * @returns {boolean}
+ */
 const hasEmptyRight = (gameBoard, tileRow, tileCol) =>
     gameBoard[tileRow][tileCol + 1] === 0;
 
-// check if the user can mine the tile
+/**
+ * @description check if the user can mine the tile
+ * @param {number[][]} gameBoard
+ * @param {number} tileRow
+ * @param {number} tileCol
+ * @returns {boolean}
+ */
 const canMine = (gameBoard, tileRow, tileCol) =>
     isFirstRow(tileRow) ||
     hasEmptyBottom(gameBoard, tileRow, tileCol) ||
@@ -106,12 +145,22 @@ const canMine = (gameBoard, tileRow, tileCol) =>
     hasEmptyRight(gameBoard, tileRow, tileCol) ||
     hasEmptyLeft(gameBoard, tileRow, tileCol);
 
-// get tile number from gameBoardTiles object
+/**
+ * @description get tile number from gameBoardTiles object
+ * @param {string} dataType
+ * @returns {number}
+ */
 const getTileNumber = (dataType) =>
     Object.keys(gameBoardTiles).find(
         (tileNum) => gameBoardTiles[tileNum] === dataType
     );
 
+/**
+ *
+ * @param {Event} e
+ * @param {number[][]} gameBoard
+ * @param {Inventory} inventory
+ */
 const addToInventoryStack = (e, gameBoard, inventory) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
@@ -125,15 +174,28 @@ const addToInventoryStack = (e, gameBoard, inventory) => {
     );
 };
 
-const displayErrorTool = ({ selectedTool, tools }) => {
-    tools[selectedTool].classList.add("fleshing-error");
+/**
+ *
+ * @param {Object} Obj
+ * @param {Tools} Obj.tools
+ */
+const displayErrorTool = ({ tools }) => {
+    tools.types[tools.selectedTool].classList.add("fleshing-error");
     setTimeout(
-        () => tools[selectedTool].classList.remove("fleshing-error"),
+        () =>
+            tools.types[tools.selectedTool].classList.remove("fleshing-error"),
         1000
     );
 };
 
-// garb a tile from the board:
+/**
+ * @description garb a tile from the board:
+ * @param {Event} e
+ * @param {Object} Obj
+ * @param {Inventory} Obj.inventory
+ * @param {number[][]} Obj.gameBoard
+ * @param {string[]} Obj.validTile
+ */
 const mineTile = (e, { inventory, gameBoard, validTile }) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
@@ -141,13 +203,7 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
 
     if (currDataType !== "cloud" && currDataType !== "sky") {
         if (validTile.indexOf(currDataType) !== -1) {
-            if (
-                canMine(
-                    gameBoard,
-                    parseInt(currPositionRow),
-                    parseInt(currPositionCol)
-                )
-            ) {
+            if (canMine(gameBoard, currPositionRow, currPositionCol)) {
                 addToInventoryStack(e, gameBoard, inventory);
             }
         } else {
@@ -156,7 +212,13 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
     }
 };
 
-// use tile from inventory and build it in game board
+/**
+ * @description use tile from inventory and build it in game board
+ * @param {Event} e
+ * @param {Object} Obj
+ * @param {number[][]} Obj.gameBoard
+ * @param {Inventory} Obj.inventory
+ */
 const buildTile = (e, { gameBoard, inventory }) => {
     if (inventory.stack.length > 0) {
         const [currDataType, currPositionCol, currPositionRow] = getTileData(
@@ -172,7 +234,12 @@ const buildTile = (e, { gameBoard, inventory }) => {
     }
 };
 
-// remove the last tile from inventory
+/**
+ * @description remove the last tile from inventory
+ * @param {Object} Obj
+ * @param {Inventory} Obj.inventory
+ * @returns {string}
+ */
 const removeLastTile = ({ inventory }) => {
     const tileToRemove = inventory.stack.pop();
 
@@ -184,11 +251,16 @@ const removeLastTile = ({ inventory }) => {
     return tileToRemove;
 };
 
-// handle tile click
-const handleTileClick = (e, { selectedTool }) => {
+/**
+ * @description handle tile click
+ * @param {Event} e
+ * @param {Object} Obj
+ * @param {Tools} Obj.tools
+ */
+const handleTileClick = (e, { tools }) => {
     let selectedFunction;
 
-    if (selectedTool === "build") {
+    if (tools.selectedTool === "build") {
         selectedFunction = buildTile;
     } else {
         selectedFunction = mineTile;
@@ -197,30 +269,43 @@ const handleTileClick = (e, { selectedTool }) => {
     selectedFunction(e, gameState);
 };
 
-// reset highlight
+/**
+ *
+ * @param {Tools} tools
+ */
 const resetHighlight = (tools) => {
     for (const tool of Object.values(tools)) {
         tool.classList.remove("selected");
     }
 };
 
-// highlight tools when clicked
+/**
+ *
+ * @param {Object} Obj
+ * @param {Tools} Obj.tools
+ * @param {Node} selectedTool
+ */
 const highlightTool = ({ tools }, selectedTool) => {
-    resetHighlight(tools);
+    resetHighlight(tools.types);
     selectedTool.classList.add("selected");
 };
 
-//validate tool and tile couple
+/**
+ * @description validate tool and tile couple
+ * @param {Object} Obj
+ * @param {Tools} Obj.tools
+ * @param {Node} selectedTool
+ */
 const getTileFromTool = ({ tools }, selectedTool) => {
-    const toolName = Object.keys(tools).find(
-        (toolType) => tools[toolType] === selectedTool
+    const toolName = Object.keys(tools.types).find(
+        (toolType) => tools.types[toolType] === selectedTool
     );
 
     gameState.validTile = toolTileCouples[toolName];
-    gameState.selectedTool = toolName;
+    gameState.tools.selectedTool = toolName;
 };
 
-for (const tool of Object.values(gameState.tools)) {
+for (const tool of Object.values(gameState.tools.types)) {
     tool.addEventListener("click", (e) => {
         highlightTool(gameState, e.target);
         getTileFromTool(gameState, e.target);
@@ -234,4 +319,3 @@ gameState.getTiles().forEach((tile) => {
 document.querySelector("#refresh").addEventListener("click", (e) => {
     window.location.reload();
 });
-console.log(gameBoard);

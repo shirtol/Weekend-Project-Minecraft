@@ -66,6 +66,32 @@ html {
     background-image: url("../assets/img/dirt.jpg");
 }
 
+/* style day and night feature */
+
+.mode-container {
+    display: flex;
+    gap: 1rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+.mode {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    border: 1px solid #fff;
+    padding: 1.5rem;
+    background-size: 60%;
+}
+
+[data-mode="day"] {
+    background-image: url("../assets/img/day.png");
+}
+
+[data-mode="night"] {
+    background-image: url("../assets/img/night.png");
+}
+
 /* style the tools and inventory */
 .flex-container {
     display: flex;
