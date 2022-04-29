@@ -126,9 +126,44 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
     console.log(inventory.stack);
 };
 
-gameState.getTiles().forEach((tile) => {
-    tile.addEventListener("click", (e) => mineTile(e, gameState));
-});
+// get the last tile from inventory
+const getLastTile = (inventory) => inventory.stack[inventory.stack.length - 1];
+
+// use tile from inventory and build it in game board
+const buildTile = (e, { gameBoard, inventory }) => {
+    const inventoryLastTile = getLastTile(inventory);
+    const tileNumber = Object.keys(gameBoardTiles).find(
+        (tileNum) => gameBoardTiles[tileNum] === inventoryLastTile
+    );
+    const [currDataType, currPositionCol, currPositionRow] = getTileData(
+        e.target
+    );
+    if (currDataType === "sky" || currDataType === "cloud") {
+        gameBoard[currPositionRow][currPositionCol] = tileNumber;
+        e.target.setAttribute("data-type", inventoryLastTile);
+        removeLastTile(gameState);
+    }
+};
+
+// remove the last tile from inventory
+const removeLastTile = ({ inventory }) => {
+    const tileToRemove = inventory.stack.pop();
+    inventory.element.setAttribute(
+        "data-type",
+        inventory.stack[inventory.stack.length - 1]
+    );
+    console.log(tileToRemove);
+    // return tileToRemove;
+};
+
+// handle tile click
+const handleTileClick = (e, { selectedTool }) => {
+    if (selectedTool === "build") {
+        buildTile(e, gameState);
+    } else {
+        mineTile(e, gameState);
+    }
+};
 
 // reset highlight
 const resetHighlight = ({ tools }) => {
@@ -155,6 +190,10 @@ const getTileFromTool = ({ tools }, selectedTool) => {
     // console.log(gameState.validTile);
 };
 
+gameState.tools.build.addEventListener("click", (e) => {
+    removeLastTile(gameState);
+});
+
 for (const tool of Object.values(gameState.tools)) {
     tool.addEventListener("click", (e) => {
         highlightTool(gameState, e.target);
@@ -162,39 +201,6 @@ for (const tool of Object.values(gameState.tools)) {
     });
 }
 
-// get the last tile from inventory
-const getLastTile = (inventory) => inventory.stack[inventory.stack.length - 1];
-
-// use tile from inventory and build it in game board
-const buildTile = (e, { gameBoard, inventory }) => {
-    const inventoryLastTile = getLastTile(inventory);
-    const tileNumber = Object.keys(gameBoardTiles).find(
-        (tileNum) => gameBoardTiles[tileNum] === inventoryLastTile
-    );
-    const [currDataType, currPositionCol, currPositionRow] = getTileData(
-        e.target
-    );
-    if (currDataType === "sky" || currDataType === "cloud") {
-        gameBoard[currPositionRow][currPositionCol] = tileNumber;
-        e.target.setAttribute("data-type", inventoryLastTile);
-    }
-};
-
 gameState.getTiles().forEach((tile) => {
-    tile.addEventListener("click", (e) => buildTile(e, gameState));
-});
-
-// remove the last tile from inventory
-const removeLastTile = ({ inventory }) => {
-    const tileToRemove = inventory.stack.pop();
-    inventory.element.setAttribute(
-        "data-type",
-        inventory.stack[inventory.stack.length - 1]
-    );
-    console.log(tileToRemove);
-    return tileToRemove;
-};
-
-gameState.tools.build.addEventListener("click", (e) => {
-    removeLastTile(gameState);
+    tile.addEventListener("click", (e) => handleTileClick(e, gameState));
 });
