@@ -12,10 +12,36 @@ const gameState = new GameState(paramsVal);
 
 // check if we are in a world that have lava (hawaii):
 const hasLava = paramsVal === "hawaii";
-if (hasLava) {
-    const lavaTool = document.querySelector('[data-toolType="lava bucket"]');
-    lavaTool.style.display = "block";
-}
+const lavaWorldSpecialTheme = (hasLava, { life, tools }) => {
+    if (hasLava) {
+        const lavaTool = document.querySelector(
+            '[data-toolType="lava bucket"]'
+        );
+        lavaTool.style.display = "block";
+        life.lifeContainer.style.display = "flex";
+    }
+};
+
+lavaWorldSpecialTheme(hasLava, gameState);
+
+const checkIfGameEnded = (life, endGameEl) => {
+    if (life.life === 0) {
+        endGameEl.style.display = "flex";
+    }
+};
+
+/**
+ * @description  lose life function (only in hawaii world): when the user try touching lava without the lava bucket he will lose life
+ * @param {*} param0
+ */
+const loseLifeIfNeeded = (tile, { tools, life, endGameEl }) => {
+    if (tile === "lava" && tools.selectedTool !== "lava bucket") {
+        life.life--;
+        life.allHearts[0].remove();
+        life.allHearts.shift();
+        checkIfGameEnded(life, endGameEl);
+    }
+};
 
 const modeToggle = ({ modes, container, tiles }) => {
     if (modes.dayNight.getAttribute("data-mode") === "day") {
@@ -278,6 +304,7 @@ const mineTile = (e, { inventory, gameBoard, validTile, tilesCounter }) => {
                 mediaPlayer.playSound(currDataType);
             }
         } else {
+            loseLifeIfNeeded(currDataType, gameState);
             displayErrorTool(gameState.tools);
             mediaPlayer.playErrorSound(currDataType);
         }

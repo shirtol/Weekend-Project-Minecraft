@@ -46,6 +46,20 @@ export const GameState = function (worldType) {
     this.tiles = new Tiles();
 
     /**
+     * @type {}
+     */
+    this.life = {
+        life: 3,
+        allHearts: [...document.querySelectorAll(".heart")],
+        lifeContainer: document.querySelector(".life"),
+    };
+
+    /**
+     * @type {Node}
+     */
+    this.endGameEl = document.querySelector(".end-game");
+
+    /**
      *
      * @type {Node}
      */

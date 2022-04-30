@@ -18,6 +18,39 @@ html {
     font-family: mineCraft;
 }
 
+/* end game */
+.end-game {
+    position: absolute;
+    z-index: 20;
+    font-size: 5rem;
+    font-weight: 600;
+    display: none;
+    background: #581620a2;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.end-game p {
+    text-align: center;
+}
+
+/* life */
+.life {
+    display: none;
+}
+
+.heart {
+    background-image: url("../../assets/img/life/heart.png");
+    width: 3rem;
+    height: 3rem;
+}
+
 /* style the container */
 .container {
     width: 80%;
@@ -82,6 +115,7 @@ html {
     gap: 1rem;
     margin-left: 1rem;
     margin-top: 1rem;
+    justify-content: space-between;
 }
 
 .mode {
@@ -140,8 +174,8 @@ html {
 
 .tool {
     border: 1px solid #fff;
-    width: 9rem;
-    height: 9rem;
+    width: 7rem;
+    height: 7rem;
     cursor: pointer;
     position: relative;
 }

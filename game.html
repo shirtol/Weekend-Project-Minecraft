@@ -16,12 +16,26 @@
         <title>My-Minecraft-Game</title>
     </head>
     <body>
+        <div class="end-game flex-col">
+            <p>YOU LOSE!</p>
+            <div id="refresh" class="center-img">
+                <p>REFRESH</p>
+                <i class="fas fa-sync fa-2x"></i>
+            </div>
+        </div>
         <div class="flex-container">
             <div class="container day"></div>
             <div class="sidebar">
                 <div class="mode-container">
                     <div data-mode="day" class="center-img mode"></div>
+                    <div class="life">
+                        <div class="heart center-img"></div>
+                        <div class="heart center-img"></div>
+                        <div class="heart center-img"></div>
+                    </div>
+                    <div class="life mobile-only"></div>
                 </div>
+
                 <div class="tools">
                     <div data-toolType="axe" class="tool center-img"></div>
                     <div data-toolType="pickaxe" class="tool center-img"></div>

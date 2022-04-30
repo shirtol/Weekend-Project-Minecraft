@@ -47,6 +47,8 @@
 
     .mode-container {
         margin-right: 2rem;
+        /* flex-direction: column; */
+        width: max-content;
     }
 
     .mode {
