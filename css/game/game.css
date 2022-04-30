@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: mineCraft;
-    src: url(../assets/fonts/Minecraft.ttf);
+    src: url(../../assets/fonts/Minecraft.ttf);
 }
 
 html {
@@ -49,24 +49,24 @@ html {
 }
 
 [data-type="leaf"] {
-    background-image: url("../assets/img/tiles/leaf.webp");
+    background-image: url("../../assets/img/tiles/leaf.webp");
 }
 
 [data-type="rock"] {
-    background-image: url("../assets/img/tiles/rock.png");
+    background-image: url("../../assets/img/tiles/rock.png");
 }
 [data-type="wood"] {
-    background-image: url("../assets/img/tiles/wood.jpg");
+    background-image: url("../../assets/img/tiles/wood.jpg");
 }
 [data-type="grass"] {
-    background-image: url("../assets/img/tiles/grass.jpg");
+    background-image: url("../../assets/img/tiles/grass.jpg");
 }
 [data-type="dirt"] {
-    background-image: url("../assets/img/tiles/dirt.jpg");
+    background-image: url("../../assets/img/tiles/dirt.jpg");
 }
 
 [data-type="water"] {
-    background-image: url("../assets/img/tiles/Water.webp");
+    background-image: url("../../assets/img/tiles/Water.webp");
 }
 
 /* style day and night feature */
@@ -96,11 +96,11 @@ html {
 }
 
 [data-mode="day"] {
-    background-image: url("../assets/img/day-night/day.png");
+    background-image: url("../../assets/img/day-night/day.png");
 }
 
 [data-mode="night"] {
-    background-image: url("../assets/img/day-night/night.png");
+    background-image: url("../../assets/img/day-night/night.png");
 }
 
 /* style the tools and inventory */
@@ -170,19 +170,19 @@ html {
 }
 
 [data-toolType="axe"] {
-    background-image: url("../assets/img/tools/axe.webp");
+    background-image: url("../../assets/img/tools/axe.webp");
 }
 
 [data-toolType="pickaxe"] {
-    background-image: url("../assets/img/tools/Pickaxe.webp");
+    background-image: url("../../assets/img/tools/Pickaxe.webp");
 }
 
 [data-toolType="shovel"] {
-    background-image: url("../assets/img/tools/Shovel.webp");
+    background-image: url("../../assets/img/tools/Shovel.webp");
 }
 
 [data-toolType="bucket"] {
-    background-image: url("../assets/img/tools/Water_Bucket.webp");
+    background-image: url("../../assets/img/tools/Water_Bucket.webp");
     background-size: 4rem;
 }
 
@@ -206,90 +206,5 @@ html {
 @keyframes blink {
     50% {
         border-color: red;
-    }
-}
-
-/* media query */
-
-@media (max-width: 1000px) {
-    .flex-container {
-        flex-direction: column;
-    }
-    .container {
-        width: 100%;
-        height: 90vh;
-    }
-    .sidebar {
-        width: 100%;
-        height: 10vh;
-        align-items: center;
-        justify-content: space-around;
-        overflow-x: scroll;
-    }
-    .sidebar,
-    .tools {
-        flex-direction: row;
-        margin-top: 0;
-    }
-    .tool {
-        width: 5rem;
-        height: 5rem;
-        align-self: center;
-    }
-    .inventory,
-    #refresh,
-    .mode-container {
-        align-self: center;
-        width: 3rem;
-        height: 3rem;
-        margin-top: 0;
-        /* margin-left: 2rem; */
-    }
-
-    #refresh {
-        width: 10rem;
-        font-size: 1rem;
-        margin-bottom: 0;
-    }
-
-    .tool::after {
-        content: "";
-    }
-
-    .mode-container {
-        margin-right: 2rem;
-    }
-
-    .mode {
-        align-self: center;
-        justify-self: center;
-    }
-}
-
-@media (max-width: 520px) {
-    :root {
-        --fa-display: inline-block;
-    }
-    .tool {
-        width: 3rem;
-        height: 3rem;
-    }
-
-    #refresh,
-    .inventory {
-        width: 3rem;
-        height: 3rem;
-    }
-
-    .inventory {
-        flex-shrink: 0;
-    }
-
-    #refresh p {
-        display: none;
-    }
-
-    [data-toolType="bucket"] {
-        background-size: cover;
     }
 }

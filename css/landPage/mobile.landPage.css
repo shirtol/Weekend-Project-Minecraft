@@ -1,0 +1,13 @@
+@media (max-width: 800px) {
+    .how-to-play {
+        width: 90%;
+        font-size: 1.5rem;
+    }
+    .worlds-container {
+        flex-direction: column;
+    }
+    [data-worldType] {
+        width: 16rem;
+        height: 9rem;
+    }
+}

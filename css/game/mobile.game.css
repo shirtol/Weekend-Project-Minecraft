@@ -1,0 +1,84 @@
+/* media query */
+
+@media (max-width: 1000px) {
+    .flex-container {
+        flex-direction: column;
+    }
+    .container {
+        width: 100%;
+        height: 90vh;
+    }
+    .sidebar {
+        width: 100%;
+        height: 10vh;
+        align-items: center;
+        justify-content: space-around;
+        overflow-x: scroll;
+    }
+    .sidebar,
+    .tools {
+        flex-direction: row;
+        margin-top: 0;
+    }
+    .tool {
+        width: 5rem;
+        height: 5rem;
+        align-self: center;
+    }
+    .inventory,
+    #refresh,
+    .mode-container {
+        align-self: center;
+        width: 3rem;
+        height: 3rem;
+        margin-top: 0;
+        /* margin-left: 2rem; */
+    }
+
+    #refresh {
+        width: 10rem;
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .tool::after {
+        content: "";
+    }
+
+    .mode-container {
+        margin-right: 2rem;
+    }
+
+    .mode {
+        align-self: center;
+        justify-self: center;
+    }
+}
+
+@media (max-width: 520px) {
+    :root {
+        --fa-display: inline-block;
+    }
+    .tool {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    #refresh,
+    .inventory {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .inventory {
+        flex-shrink: 0;
+    }
+
+    #refresh p {
+        display: none;
+    }
+
+    [data-toolType="bucket"] {
+        background-size: cover;
+    }
+}

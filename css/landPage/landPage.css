@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: mineCraft;
-    src: url(../assets/fonts/Minecraft.ttf);
+    src: url(../../assets/fonts/Minecraft.ttf);
 }
 
 html {
@@ -15,7 +15,7 @@ html {
 }
 
 .container {
-    background: url("../assets/img/landPage/landPage.png");
+    background: url("../../../assets/img/landPage/landPage.png");
     height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
@@ -88,10 +88,10 @@ html {
 }
 
 [data-worldType="regular"] {
-    background-image: url("../assets/img/landPage/worlds/regular.png");
+    background-image: url("../../assets/img/landPage/worlds/regular.png");
 }
 [data-worldType="island"] {
-    background-image: url("../assets/img/landPage/worlds/island.png");
+    background-image: url("../../assets/img/landPage/worlds/island.png");
 }
 
 [data-worldType] {
@@ -101,18 +101,4 @@ html {
 
 [data-worldType]::after {
     content: attr(data-worldType);
-}
-
-@media (max-width: 800px) {
-    .how-to-play {
-        width: 90%;
-        font-size: 1.5rem;
-    }
-    .worlds-container {
-        flex-direction: column;
-    }
-    [data-worldType] {
-        width: 16rem;
-        height: 9rem;
-    }
 }
