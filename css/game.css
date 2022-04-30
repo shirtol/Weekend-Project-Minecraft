@@ -99,14 +99,6 @@ html {
     background-image: url("../assets/img/night.png");
 }
 
-/* [data-mode="day"] {
-    background-image: url("../assets/img/day.png");
-}
-
-[data-mode="night"] {
-    background-image: url("../assets/img/night.png");
-} */
-
 /* style the tools and inventory */
 .flex-container {
     display: flex;
@@ -121,6 +113,8 @@ html {
 .sidebar {
     width: 20%;
     background: black;
+    height: 100vh;
+    justify-content: space-between;
 }
 
 .tools {
@@ -158,10 +152,17 @@ html {
 #refresh {
     border: 1px solid #fff;
     align-self: center;
-    margin-top: 12rem;
     width: 5rem;
     height: 5rem;
     cursor: pointer;
+}
+
+.inventory {
+    flex-shrink: 0;
+}
+
+.fas {
+    display: none;
 }
 
 .selected {
@@ -186,15 +187,16 @@ html {
 }
 
 #refresh {
-    margin-top: 12rem;
+    /* margin-top: 8rem; */
     width: 10rem;
     height: 5rem;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     letter-spacing: 0.2rem;
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-bottom: 2rem;
 }
 
 .fleshing-error {
@@ -221,7 +223,8 @@ html {
         width: 100%;
         height: 10vh;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
+        overflow-x: scroll;
     }
     .sidebar,
     .tools {
@@ -234,20 +237,61 @@ html {
         align-self: center;
     }
     .inventory,
-    #refresh {
+    #refresh,
+    .mode-container {
         align-self: center;
         width: 3rem;
         height: 3rem;
         margin-top: 0;
-        margin-left: 2rem;
+        /* margin-left: 2rem; */
     }
 
     #refresh {
         width: 10rem;
         font-size: 1rem;
+        margin-bottom: 0;
     }
 
     .tool::after {
         content: "";
+    }
+
+    .mode-container {
+        margin-right: 2rem;
+    }
+
+    .mode {
+        align-self: center;
+        justify-self: center;
+    }
+}
+
+@media (max-width: 520px) {
+    .tool {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    #refresh,
+    .inventory {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .inventory {
+        flex-shrink: 0;
+    }
+
+    #refresh p {
+        display: none;
+    }
+
+    .fa-sync {
+        display: block;
+        color: #fff;
+    }
+
+    [data-toolType="bucket"] {
+        background-size: cover;
     }
 }
