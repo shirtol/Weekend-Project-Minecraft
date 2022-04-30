@@ -15,7 +15,7 @@ html {
 }
 
 .container {
-    background: url("../assets/img/landPage.png");
+    background: url("../assets/img/landPage/landPage.png");
     height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;

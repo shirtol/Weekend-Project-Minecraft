@@ -1,3 +1,7 @@
+:root {
+    --fa-display: none;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -45,24 +49,24 @@ html {
 }
 
 [data-type="leaf"] {
-    background-image: url("../assets/img/leaf.webp");
+    background-image: url("../assets/img/tiles/leaf.webp");
 }
 
 [data-type="rock"] {
-    background-image: url("../assets/img/rock.png");
+    background-image: url("../assets/img/tiles/rock.png");
 }
 [data-type="wood"] {
-    background-image: url("../assets/img/wood.jpg");
+    background-image: url("../assets/img/tiles/wood.jpg");
 }
 [data-type="grass"] {
-    background-image: url("../assets/img/grass.jpg");
+    background-image: url("../assets/img/tiles/grass.jpg");
 }
 [data-type="dirt"] {
-    background-image: url("../assets/img/dirt.jpg");
+    background-image: url("../assets/img/tiles/dirt.jpg");
 }
 
 [data-type="water"] {
-    background-image: url("../assets/img/Water.webp");
+    background-image: url("../assets/img/tiles/Water.webp");
 }
 
 /* style day and night feature */
@@ -92,11 +96,11 @@ html {
 }
 
 [data-mode="day"] {
-    background-image: url("../assets/img/day.png");
+    background-image: url("../assets/img/day-night/day.png");
 }
 
 [data-mode="night"] {
-    background-image: url("../assets/img/night.png");
+    background-image: url("../assets/img/day-night/night.png");
 }
 
 /* style the tools and inventory */
@@ -161,28 +165,24 @@ html {
     flex-shrink: 0;
 }
 
-.fas {
-    display: none;
-}
-
 .selected {
     border: 1px solid blue;
 }
 
 [data-toolType="axe"] {
-    background-image: url("../assets/img/axe.webp");
+    background-image: url("../assets/img/tools/axe.webp");
 }
 
 [data-toolType="pickaxe"] {
-    background-image: url("../assets/img/Pickaxe.webp");
+    background-image: url("../assets/img/tools/Pickaxe.webp");
 }
 
 [data-toolType="shovel"] {
-    background-image: url("../assets/img/Shovel.webp");
+    background-image: url("../assets/img/tools/Shovel.webp");
 }
 
 [data-toolType="bucket"] {
-    background-image: url("../assets/img/Water_Bucket.webp");
+    background-image: url("../assets/img/tools/Water_Bucket.webp");
     background-size: 4rem;
 }
 
@@ -267,6 +267,9 @@ html {
 }
 
 @media (max-width: 520px) {
+    :root {
+        --fa-display: inline-block;
+    }
     .tool {
         width: 3rem;
         height: 3rem;
@@ -284,11 +287,6 @@ html {
 
     #refresh p {
         display: none;
-    }
-
-    .fa-sync {
-        display: block;
-        color: #fff;
     }
 
     [data-toolType="bucket"] {
