@@ -8,8 +8,8 @@ export const MediaPlayer = function () {
         fail: new Audio("../assets/sfx/wood-error.m4A"),
     };
     this.leaf = {
-        success: this.wood.success,
-        fail: new Audio("../assets/sfx/wood-error.m4A"),
+        success: new Audio("../assets/sfx/leaf.m4A"),
+        fail: new Audio("../assets/sfx/leaf.m4A"),
     };
     this.rock = {
         success: new Audio("../assets/sfx/pickaxe.m4A"),
@@ -20,6 +20,12 @@ export const MediaPlayer = function () {
         fail: new Audio("../assets/sfx/shovel.m4A"),
     };
     this.grass = this.dirt;
+
+    this.lava = {
+        success: new Audio("../assets/sfx/lava.m4A"),
+        fail: this.water.fail,
+    };
+    this.basalt = this.rock;
 
     this.sky = {
         success: new Audio("../assets/sfx/build.m4A"),
