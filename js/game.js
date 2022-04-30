@@ -7,15 +7,21 @@ const paramsVal = params.get("worldType");
 
 const gameState = new GameState(paramsVal);
 
-const modeToggle = ({ modes, container }) => {
+const modeToggle = ({ modes, container, tiles }) => {
     if (modes.dayNight.getAttribute("data-mode") === "day") {
         container.classList.add("night");
         container.classList.remove("day");
         modes.dayNight.setAttribute("data-mode", "night");
+        tiles
+            .getAllClouds()
+            .forEach((cloud) => cloud.classList.add("night-tile"));
     } else {
         container.classList.add("day");
         container.classList.remove("night");
         modes.dayNight.setAttribute("data-mode", "day");
+        tiles
+            .getAllClouds()
+            .forEach((cloud) => cloud.classList.remove("night-tile"));
     }
 };
 
@@ -345,7 +351,7 @@ for (const tool of Object.values(gameState.tools.types)) {
     });
 }
 
-gameState.getTiles().forEach((tile) => {
+gameState.tiles.getTiles().forEach((tile) => {
     tile.addEventListener("click", (e) => handleTileClick(e, gameState));
 });
 
