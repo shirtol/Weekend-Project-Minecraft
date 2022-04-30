@@ -41,7 +41,8 @@ html {
     font-weight: 700;
 }
 
-.how-to-play {
+.how-to-play,
+.worlds-container {
     width: 40%;
     font-size: 2rem;
     text-align: center;
@@ -58,6 +59,17 @@ html {
     animation: fade 1s linear;
 }
 
+.worlds-container > * {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+        rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    transition: 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.worlds-container > *:hover {
+    transform: scale(1.05);
+}
+
 @keyframes fade {
     0% {
         opacity: 0;
@@ -67,9 +79,40 @@ html {
     }
 }
 
+.worlds-container {
+    display: flex;
+    gap: 2rem;
+    position: absolute;
+    width: max-content;
+    display: none;
+}
+
+[data-worldType="regular"] {
+    background-image: url("../assets/img/landPage/worlds/regular.png");
+}
+[data-worldType="island"] {
+    background-image: url("../assets/img/landPage/worlds/island.png");
+}
+
+[data-worldType] {
+    width: 24rem;
+    height: 13.5rem;
+}
+
+[data-worldType]::after {
+    content: attr(data-worldType);
+}
+
 @media (max-width: 800px) {
     .how-to-play {
         width: 90%;
         font-size: 1.5rem;
+    }
+    .worlds-container {
+        flex-direction: column;
+    }
+    [data-worldType] {
+        width: 16rem;
+        height: 9rem;
     }
 }

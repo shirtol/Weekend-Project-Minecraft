@@ -1,16 +1,17 @@
-import { gameBoard } from "./gameBoard.js";
+import { regular, island } from "./gameBoard.js";
 import { Modes } from "./Modes.js";
 import { Tools } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
 
 /**
  *@class
+ @param {string} worldType
  */
-export const GameState = function () {
+export const GameState = function (worldType) {
     /**
      * @type {number[][]}
      */
-    this.gameBoard = gameBoard;
+    this.gameBoard = getWorldByType(worldType);
     /**
      * @type {Node}
      */
@@ -36,4 +37,20 @@ export const GameState = function () {
      * @type {() => Node}
      */
     this.getTiles = () => document.querySelectorAll(".tile");
+};
+
+/**
+ *
+ * @param {string} selectedWorldType
+ * @returns {number[][]}
+ */
+const getWorldByType = (selectedWorldType) => {
+    switch (selectedWorldType) {
+        case "regular":
+            return regular;
+        case "island":
+            return island;
+        default:
+            throw new Error(`Incorrect world selected: ${selectedWorldType}`);
+    }
 };

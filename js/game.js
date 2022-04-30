@@ -2,7 +2,10 @@ import { Tools } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
 import { GameState } from "./GameState.js";
 
-const gameState = new GameState();
+const params = new URLSearchParams(window.location.search);
+const paramsVal = params.get("worldType");
+
+const gameState = new GameState(paramsVal);
 
 const modeToggle = ({ modes, container }) => {
     if (modes.dayNight.getAttribute("data-mode") === "day") {
