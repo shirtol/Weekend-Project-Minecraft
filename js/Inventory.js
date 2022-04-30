@@ -1,5 +1,15 @@
+/**
+ * @class
+ */
 export const Inventory = function () {
+    /**
+     * @type {string[]}
+     */
     this.stack = [];
+
+    /**
+     * @type {Node}
+     */
     this.element = document.querySelector(".inventory");
 
     /**

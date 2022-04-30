@@ -1,21 +1,62 @@
-// tiles constructor
+/**
+ * @class
+ */
 export const Tiles = function () {
-    this.getAllClouds = () => document.querySelectorAll('[data-type="cloud"]');
-    this.getAllLeaves = () => document.querySelectorAll('[data-type="leaf"]');
-    this.getAllRocks = () => document.querySelectorAll('[data-type="rock"]');
-    this.getAllWood = () => document.querySelectorAll('[data-type="wood"]');
-    this.getAllGrass = () => document.querySelectorAll('[data-type="grass"]');
-    this.getAllDirt = () => document.querySelectorAll('[data-type="dirt"]');
-    this.getAllWater = () => document.querySelectorAll('[data-type="water"]');
-    this.getAllLava = () => document.querySelectorAll('[data-type="lava"]');
-    this.getAllBasalt = () => document.querySelectorAll('[data-type="basalt"]');
     /**
-     * @type {() => Node}
+     * @type {() => NodeList}
+     */
+    this.getAllClouds = () => document.querySelectorAll('[data-type="cloud"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllLeaves = () => document.querySelectorAll('[data-type="leaf"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllRocks = () => document.querySelectorAll('[data-type="rock"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllWood = () => document.querySelectorAll('[data-type="wood"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllGrass = () => document.querySelectorAll('[data-type="grass"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllDirt = () => document.querySelectorAll('[data-type="dirt"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllWater = () => document.querySelectorAll('[data-type="water"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllLava = () => document.querySelectorAll('[data-type="lava"]');
+
+    /**
+     * @type {() => NodeList}
+     */
+    this.getAllBasalt = () => document.querySelectorAll('[data-type="basalt"]');
+
+    /**
+     * @type {() => NodeList}
      */
     this.getTiles = () => document.querySelectorAll(".tile");
 };
 
-// Object that holds the gameBoard tiles elements:
+/**
+ * @description Object that holds the gameBoard tiles elements:
+ */
+
 export const gameBoardTiles = {
     0: "sky",
     1: "cloud",
@@ -29,6 +70,9 @@ export const gameBoardTiles = {
     256: "basalt",
 };
 
+/**
+ * @description tool and tile couples
+ */
 const toolTile = {
     leaf: "axe",
     rock: "Pickaxe",
@@ -40,23 +84,35 @@ const toolTile = {
     basalt: "Pickaxe",
 };
 
+/**
+ * @description Create the tools and tiles table for game instructions
+ */
 export const createToolTileTable = () => {
     const table = document.querySelector("table");
     for (const tile of Object.values(gameBoardTiles)) {
         if (tile === "sky" || tile === "cloud") continue;
         const tr = document.createElement("tr");
         tr.style.height = "4rem";
-        const tdTile = document.createElement("td");
-        tdTile.classList.add("center-img");
-        const tdTool = document.createElement("td");
-        tdTool.classList.add("center-img");
+        const tdTile = createTd("tiles", tile);
+        const tdTool = createTd("tools", toolTile[tile]);
 
-        tdTile.style.backgroundImage = `url(../assets/img/tiles/${tile}.webp)`;
-        tdTool.style.backgroundImage = `url(../assets/img/tools/${toolTile[tile]}.webp)`;
         tr.appendChild(tdTile);
         tr.appendChild(tdTool);
         table.appendChild(tr);
     }
+};
+
+/**
+ *
+ * @param {string} tile
+ * @returns {HTMLElement}
+ */
+
+const createTd = (folderName, imgName) => {
+    const tdTool = document.createElement("td");
+    tdTool.classList.add("center-img");
+    tdTool.style.backgroundImage = `url(../assets/img/${folderName}/${imgName}.webp)`;
+    return tdTool;
 };
 
 /**
