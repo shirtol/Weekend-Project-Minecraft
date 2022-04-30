@@ -78,7 +78,8 @@
         display: none;
     }
 
-    [data-toolType="bucket"] {
+    [data-toolType="bucket"],
+    [data-toolType="lava bucket"] {
         background-size: cover;
     }
 

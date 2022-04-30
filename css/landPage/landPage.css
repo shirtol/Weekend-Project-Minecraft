@@ -88,10 +88,13 @@ html {
 }
 
 [data-worldType="israel"] {
-    background-image: url("../../assets/img/landPage/worlds/regular.png");
+    background-image: url("../../assets/img/landPage/worlds/israel.png");
 }
 [data-worldType="australia"] {
-    background-image: url("../../assets/img/landPage/worlds/island.png");
+    background-image: url("../../assets/img/landPage/worlds/australia.png");
+}
+[data-worldType="hawaii"] {
+    background-image: url("../../assets/img/landPage/worlds/hawaii.png");
 }
 
 [data-worldType] {

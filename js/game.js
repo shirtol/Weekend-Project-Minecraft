@@ -10,6 +10,13 @@ const paramsVal = params.get("worldType");
 
 const gameState = new GameState(paramsVal);
 
+// check if we are in a world that have lava (hawaii):
+const hasLava = paramsVal === "hawaii";
+if (hasLava) {
+    const lavaTool = document.querySelector('[data-toolType="lava bucket"]');
+    lavaTool.style.display = "block";
+}
+
 const modeToggle = ({ modes, container, tiles }) => {
     if (modes.dayNight.getAttribute("data-mode") === "day") {
         container.classList.add("night");
@@ -42,14 +49,17 @@ const gameBoardTiles = {
     16: "grass",
     32: "dirt",
     64: "water",
+    128: "lava",
+    256: "basalt",
 };
 
 // Object tht holds the tool-tile couples:
 const toolTileCouples = {
     axe: ["wood", "leaf"],
-    pickaxe: ["rock"],
+    pickaxe: ["rock", "basalt"],
     shovel: ["grass", "dirt"],
     bucket: ["water"],
+    lavaBucket: ["lava"],
     build: ["sky"],
 };
 

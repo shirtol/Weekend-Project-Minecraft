@@ -68,6 +68,12 @@ html {
 [data-type="water"] {
     background-image: url("../../assets/img/tiles/Water.webp");
 }
+[data-type="lava"] {
+    background-image: url("../../assets/img/tiles/lava.webp");
+}
+[data-type="basalt"] {
+    background-image: url("../../assets/img/tiles/basalt.png");
+}
 
 /* style day and night feature */
 
@@ -134,8 +140,8 @@ html {
 
 .tool {
     border: 1px solid #fff;
-    width: 10rem;
-    height: 10rem;
+    width: 9rem;
+    height: 9rem;
     cursor: pointer;
     position: relative;
 }
@@ -146,8 +152,8 @@ html {
     position: absolute;
     bottom: 0;
     right: 0;
-    margin-right: 0.8rem;
-    margin-bottom: 0.8rem;
+    margin-right: 0.2rem;
+    margin-bottom: 0.2rem;
     font-size: 1.3rem;
 }
 
@@ -201,6 +207,11 @@ html {
 [data-toolType="bucket"] {
     background-image: url("../../assets/img/tools/Water_Bucket.webp");
     background-size: 4rem;
+}
+[data-toolType="lava bucket"] {
+    background-image: url("../../assets/img/tools/Lava_Bucket.webp");
+    background-size: 4rem;
+    display: none;
 }
 
 #refresh {

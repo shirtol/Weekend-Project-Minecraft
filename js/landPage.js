@@ -1,10 +1,12 @@
+// import { paramsVal } from "./game.js";
+
 const LandPage = function () {
     this.startBtn = document.querySelector('[data-btnType="start"]');
     this.instructionBtn = document.querySelector(
         '[data-btnType="instructions"]'
     );
     this.howToPlay = document.querySelector(".how-to-play");
-    this.worlds = ["israel", "australia"];
+    this.worlds = ["israel", "australia", "hawaii"];
     this.worldsContainer = document.querySelector(".worlds-container");
     this.getWorlds = () => document.querySelectorAll("[data-worldType]");
 };
