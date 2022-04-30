@@ -29,6 +29,7 @@ const gameBoardTiles = {
     8: "wood",
     16: "grass",
     32: "dirt",
+    64: "water",
 };
 
 // Object tht holds the tool-tile couples:
@@ -36,6 +37,7 @@ const toolTileCouples = {
     axe: ["wood", "leaf"],
     pickaxe: ["rock"],
     shovel: ["grass", "dirt"],
+    bucket: ["water"],
     build: ["sky"],
 };
 

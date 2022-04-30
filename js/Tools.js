@@ -3,6 +3,7 @@ const ToolTypes = function () {
     this.axe = document.querySelector('[data-toolType="axe"]');
     this.pickaxe = document.querySelector('[data-toolType="pickaxe"]');
     this.shovel = document.querySelector('[data-toolType="shovel"]');
+    this.bucket = document.querySelector('[data-toolType="bucket"]');
     this.build = document.querySelector('[data-toolType="build"]');
 };
 

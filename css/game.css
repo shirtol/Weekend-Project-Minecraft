@@ -61,6 +61,10 @@ html {
     background-image: url("../assets/img/dirt.jpg");
 }
 
+[data-type="water"] {
+    background-image: url("../assets/img/Water.webp");
+}
+
 /* style day and night feature */
 
 .mode-container {
@@ -174,6 +178,11 @@ html {
 
 [data-toolType="shovel"] {
     background-image: url("../assets/img/Shovel.webp");
+}
+
+[data-toolType="bucket"] {
+    background-image: url("../assets/img/Water_Bucket.webp");
+    background-size: 4rem;
 }
 
 #refresh {
