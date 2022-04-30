@@ -3,6 +3,7 @@ import { Modes } from "./Modes.js";
 import { Tools } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
 import { Tiles } from "./Tiles.js";
+import { Life } from "./Life.js";
 
 /**
  *@class
@@ -48,11 +49,7 @@ export const GameState = function (worldType) {
     /**
      * @type {}
      */
-    this.life = {
-        life: 3,
-        allHearts: [...document.querySelectorAll(".heart")],
-        lifeContainer: document.querySelector(".life"),
-    };
+    this.life = new Life();
 
     /**
      * @type {Node}

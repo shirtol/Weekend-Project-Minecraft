@@ -1,4 +1,6 @@
-// mode constructor
+/**
+ * @class
+ */
 export const Modes = function () {
     /**
      * @type {Node}

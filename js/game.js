@@ -21,6 +21,12 @@ const gameState = new GameState(paramsVal);
 
 // check if we are in a world that have lava (hawaii):
 const hasLava = paramsVal === "hawaii";
+/**
+ *
+ * @param {boolean} hasLava
+ * @param {Object} Obj
+ * @param {Life} Obj.life
+ */
 const lavaWorldSpecialTheme = (hasLava, { life }) => {
     if (hasLava) {
         const lavaTool = document.querySelector(
@@ -33,6 +39,11 @@ const lavaWorldSpecialTheme = (hasLava, { life }) => {
 
 lavaWorldSpecialTheme(hasLava, gameState);
 
+/**
+ *
+ * @param {Life} life
+ * @param {Node} endGameEl
+ */
 const checkIfGameEnded = (life, endGameEl) => {
     if (life.life === 0) {
         endGameEl.style.display = "flex";
@@ -41,7 +52,11 @@ const checkIfGameEnded = (life, endGameEl) => {
 
 /**
  * @description  lose life function (only in hawaii world): when the user try touching lava without the lava bucket he will lose life
- * @param {*} param0
+ * @param {string} tile
+ * @param {Object} Obj
+ * @param {Tools} Obj.tools
+ * @param {Life} Obj.life
+ * @param {Node} Obj.endGameEl
  */
 const loseLifeIfNeeded = (tile, { tools, life, endGameEl }) => {
     if (tile === "lava" && tools.selectedTool !== "lava bucket") {
@@ -51,7 +66,13 @@ const loseLifeIfNeeded = (tile, { tools, life, endGameEl }) => {
         checkIfGameEnded(life, endGameEl);
     }
 };
-
+/**
+ * @description Changes day / night cycle
+ * @param {Object} Obj
+ * @param {Modes} Obj.modes
+ * @param {Node} Obj.container
+ * @param {Tiles} Obj.tiles
+ */
 const modeToggle = ({ modes, container, tiles }) => {
     if (modes.dayNight.getAttribute("data-mode") === "day") {
         container.classList.add("night");
@@ -150,7 +171,10 @@ const addToInventoryStack = (e, gameBoard, inventory) => {
     );
 };
 
-// display counter error (when trying to build and the counter is zero)
+/**
+ * @description display counter error (when trying to build and the counter is zero)
+ * @param {Node} tilesCounter
+ */
 const displayErrorCount = (tilesCounter) => {
     tilesCounter.classList.add("error-counter");
     setTimeout(() => tilesCounter.classList.remove("error-counter"), 1000);

@@ -1,16 +1,52 @@
-// tools constructor
+/**
+ * @class
+ */
 const ToolTypes = function () {
+    /**
+     * @type {Node}
+     */
     this.axe = document.querySelector('[data-toolType="axe"]');
+
+    /**
+     * @type {Node}
+     */
     this.pickaxe = document.querySelector('[data-toolType="pickaxe"]');
+
+    /**
+     * @type {Node}
+     */
     this.shovel = document.querySelector('[data-toolType="shovel"]');
+
+    /**
+     * @type {Node}
+     */
     this.bucket = document.querySelector('[data-toolType="bucket"]');
+
+    /**
+     * @type {Node}
+     */
     this.lavaBucket = document.querySelector('[data-toolType="lava bucket"]');
+
+    /**
+     * @type {Node}
+     */
     this.build = document.querySelector('[data-toolType="build"]');
 };
 
+/**
+ * @class
+ */
 export const Tools = function () {
+    /**
+     * @type {ToolTypes}
+     */
     this.types = new ToolTypes();
+
+    /**
+     * @type {string}
+     */
     this.selectedTool = undefined;
+
     /**
      *
      * @param {Object} Obj
@@ -30,7 +66,6 @@ export const Tools = function () {
     };
 };
 
-// Object tht holds the tool-tile couples:
 export const toolTileCouples = {
     axe: ["wood", "leaf"],
     pickaxe: ["rock", "basalt"],

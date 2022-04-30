@@ -111,6 +111,35 @@ export const israel = [
     ],
 ];
 
+// gameBoard is a matrix which represent the board by numbers.
+/** 
+ * @description
+ * This game board represent the values of each tile on the board. 
+ * When the user mine/build tile the number in this matrix will change using bitwise operations.
+ * All values should be power of 2, intermediate values will be present because of bitwise operations.
+ * @values 
+    0: sky
+
+    1: cloud
+
+    2 / 3: leaf
+
+    4 / 5: rock
+
+    8 / 9: wood
+
+    16 / 17: grass
+
+    32 / 33: dirt
+
+    64 / 65: water
+
+    128 / 129: lava
+
+    256 / 257: basalt
+
+
+*/
 export const australia = [
     [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -195,6 +224,35 @@ export const australia = [
     ],
 ];
 
+// gameBoard is a matrix which represent the board by numbers.
+/** 
+ * @description
+ * This game board represent the values of each tile on the board. 
+ * When the user mine/build tile the number in this matrix will change using bitwise operations.
+ * All values should be power of 2, intermediate values will be present because of bitwise operations.
+ * @values 
+    0: sky
+
+    1: cloud
+
+    2 / 3: leaf
+
+    4 / 5: rock
+
+    8 / 9: wood
+
+    16 / 17: grass
+
+    32 / 33: dirt
+
+    64 / 65: water
+
+    128 / 129: lava
+
+    256 / 257: basalt
+
+
+*/
 export const hawaii = [
     [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
