@@ -1,5 +1,3 @@
-import { toolTileCouples } from "./Tools.js";
-
 // tiles constructor
 export const Tiles = function () {
     this.getAllClouds = () => document.querySelectorAll('[data-type="cloud"]');
