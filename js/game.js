@@ -324,6 +324,8 @@ gameState.tiles.getTiles().forEach((tile) => {
     tile.addEventListener("click", (e) => handleTileClick(e, gameState));
 });
 
-document.querySelector("#refresh").addEventListener("click", (e) => {
-    window.location.reload();
+document.querySelectorAll("#refresh").forEach((el) => {
+    el.addEventListener("click", (e) => {
+        window.location.reload();
+    });
 });
