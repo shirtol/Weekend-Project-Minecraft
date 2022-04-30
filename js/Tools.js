@@ -11,6 +11,23 @@ const ToolTypes = function () {
 export const Tools = function () {
     this.types = new ToolTypes();
     this.selectedTool = undefined;
+    /**
+     *
+     * @param {Object} Obj
+     * @param {Tools} Obj.tools
+     */
+    this.displayErrorTool = () => {
+        if (this.selectedTool === undefined) return;
+        this.types[this.selectedTool].classList.add("fleshing-error");
+
+        setTimeout(
+            () =>
+                this.types[this.selectedTool].classList.remove(
+                    "fleshing-error"
+                ),
+            1000
+        );
+    };
 };
 
 // Object tht holds the tool-tile couples:

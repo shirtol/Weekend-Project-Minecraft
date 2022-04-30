@@ -60,3 +60,34 @@ export const createToolTileTable = () => {
         table.appendChild(tr);
     }
 };
+
+/**
+ *
+ * @param {string} tileType
+ * @param {number} row
+ * @param {number} col
+ * @returns {HTMLElement}
+ */
+export const createTile = (tileType, row, col) => {
+    const tile = document.createElement("div");
+    tile.setAttribute("data-type", tileType);
+    tile.setAttribute("data-positionCol", col);
+    tile.setAttribute("data-positionRow", row);
+    tile.classList.add("tile");
+    tile.classList.add("center-img");
+
+    return tile;
+};
+
+/**
+ * @description get tile data
+ * @param {Node} tile
+ * @returns {[string, number, number]}
+ */
+export const getTileData = (tile) => {
+    const currDataType = tile.getAttribute("data-type");
+    const currPositionCol = tile.getAttribute("data-positionCol");
+    const currPositionRow = tile.getAttribute("data-positionRow");
+
+    return [currDataType, parseInt(currPositionCol), parseInt(currPositionRow)];
+};

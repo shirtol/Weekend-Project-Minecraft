@@ -2,7 +2,7 @@ import { Tools, toolTileCouples } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
 import { GameState } from "./GameState.js";
 import { MediaPlayer } from "./Sounds.js";
-import { gameBoardTiles } from "./Tiles.js";
+import { gameBoardTiles, createTile, getTileData } from "./Tiles.js";
 import {
     isFirstRow,
     isLastRow,
@@ -21,7 +21,7 @@ const gameState = new GameState(paramsVal);
 
 // check if we are in a world that have lava (hawaii):
 const hasLava = paramsVal === "hawaii";
-const lavaWorldSpecialTheme = (hasLava, { life, tools }) => {
+const lavaWorldSpecialTheme = (hasLava, { life }) => {
     if (hasLava) {
         const lavaTool = document.querySelector(
             '[data-toolType="lava bucket"]'
@@ -75,24 +75,6 @@ gameState.modes.dayNight.addEventListener("click", (e) =>
 );
 
 /**
- *
- * @param {string} tileType
- * @param {number} row
- * @param {number} col
- * @returns {HTMLElement}
- */
-const createTile = (tileType, row, col) => {
-    const tile = document.createElement("div");
-    tile.setAttribute("data-type", tileType);
-    tile.setAttribute("data-positionCol", col);
-    tile.setAttribute("data-positionRow", row);
-    tile.classList.add("tile");
-    tile.classList.add("center-img");
-
-    return tile;
-};
-
-/**
  * @description create gameBoard:
  * @param {Object} Obj
  * @param {number[][]} Obj.gameBoard
@@ -110,29 +92,6 @@ const draw = ({ gameBoard, container }) => {
 };
 
 draw(gameState);
-
-/**
- * @description get tile data
- * @param {Node} tile
- * @returns {[string, number, number]}
- */
-const getTileData = (tile) => {
-    const currDataType = tile.getAttribute("data-type");
-    const currPositionCol = tile.getAttribute("data-positionCol");
-    const currPositionRow = tile.getAttribute("data-positionRow");
-
-    return [currDataType, parseInt(currPositionCol), parseInt(currPositionRow)];
-};
-
-/**
- * @description add tile to inventory
- * @param {Inventory} inventory
- * @param {string} data
- */
-const addToInventory = (inventory, data) => {
-    inventory.stack.push(data);
-    inventory.element.setAttribute("data-type", data);
-};
 
 /**
  * @description check if the user can mine the tile
@@ -183,26 +142,11 @@ const addToInventoryStack = (e, gameBoard, inventory) => {
         e.target
     );
     const tileNumber = getTileNumber(currDataType);
-    addToInventory(inventory, currDataType);
+    inventory.addToInventory(currDataType);
     gameBoard[currPositionRow][currPositionCol] -= tileNumber;
     e.target.setAttribute(
         "data-type",
         gameBoardTiles[gameBoard[currPositionRow][currPositionCol]]
-    );
-};
-
-/**
- *
- * @param {Object} Obj
- * @param {Tools} Obj.tools
- */
-const displayErrorTool = ({ types, selectedTool }) => {
-    if (selectedTool === undefined) return;
-    types[selectedTool].classList.add("fleshing-error");
-
-    setTimeout(
-        () => types[selectedTool].classList.remove("fleshing-error"),
-        1000
     );
 };
 
@@ -219,8 +163,12 @@ const displayErrorCount = (tilesCounter) => {
  * @param {Inventory} Obj.inventory
  * @param {number[][]} Obj.gameBoard
  * @param {string[]} Obj.validTile
+ * @param {Tools} Obj.tools
  */
-const mineTile = (e, { inventory, gameBoard, validTile, tilesCounter }) => {
+const mineTile = (
+    e,
+    { inventory, gameBoard, validTile, tilesCounter, tools }
+) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
@@ -235,7 +183,7 @@ const mineTile = (e, { inventory, gameBoard, validTile, tilesCounter }) => {
             }
         } else {
             loseLifeIfNeeded(currDataType, gameState);
-            displayErrorTool(gameState.tools);
+            tools.displayErrorTool();
             mediaPlayer.playErrorSound(currDataType);
         }
     }
