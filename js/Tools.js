@@ -12,3 +12,13 @@ export const Tools = function () {
     this.types = new ToolTypes();
     this.selectedTool = undefined;
 };
+
+// Object tht holds the tool-tile couples:
+export const toolTileCouples = {
+    axe: ["wood", "leaf"],
+    pickaxe: ["rock", "basalt"],
+    shovel: ["grass", "dirt"],
+    bucket: ["water"],
+    lavaBucket: ["lava"],
+    build: ["sky"],
+};

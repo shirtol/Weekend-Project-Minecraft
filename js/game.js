@@ -1,7 +1,8 @@
-import { Tools } from "./Tools.js";
+import { Tools, toolTileCouples } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
 import { GameState } from "./GameState.js";
 import { MediaPlayer } from "./Sounds.js";
+import { gameBoardTiles } from "./Tiles.js";
 
 const mediaPlayer = new MediaPlayer();
 
@@ -64,30 +65,6 @@ const modeToggle = ({ modes, container, tiles }) => {
 gameState.modes.dayNight.addEventListener("click", (e) =>
     modeToggle(gameState)
 );
-
-// Object that holds the gameBoard tiles elements:
-const gameBoardTiles = {
-    0: "sky",
-    1: "cloud",
-    2: "leaf",
-    4: "rock",
-    8: "wood",
-    16: "grass",
-    32: "dirt",
-    64: "water",
-    128: "lava",
-    256: "basalt",
-};
-
-// Object tht holds the tool-tile couples:
-const toolTileCouples = {
-    axe: ["wood", "leaf"],
-    pickaxe: ["rock", "basalt"],
-    shovel: ["grass", "dirt"],
-    bucket: ["water"],
-    lavaBucket: ["lava"],
-    build: ["sky"],
-};
 
 /**
  *

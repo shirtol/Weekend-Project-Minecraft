@@ -1,4 +1,4 @@
-// import { paramsVal } from "./game.js";
+import { createToolTileTable } from "./Tiles.js";
 
 const LandPage = function () {
     this.startBtn = document.querySelector('[data-btnType="start"]');
@@ -22,7 +22,7 @@ landPage.startBtn.addEventListener("click", () => {
 landPage.instructionBtn.addEventListener("click", () => {
     landPage.worldsContainer.style.display = "none";
     landPage.howToPlay.style.display =
-        landPage.howToPlay.style.display === "block" ? "none" : "block";
+        landPage.howToPlay.style.display === "flex" ? "none" : "flex";
 });
 
 const addWorldsToContainer = ({ worldsContainer, worlds }) => {
@@ -48,3 +48,5 @@ const addClickEventToAllWorlds = () => {
 };
 
 addClickEventToAllWorlds();
+
+createToolTileTable();
