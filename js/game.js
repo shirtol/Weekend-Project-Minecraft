@@ -4,6 +4,22 @@ import { GameState } from "./GameState.js";
 
 const gameState = new GameState();
 
+const modeToggle = ({ modes, container }) => {
+    if (modes.dayNight.getAttribute("data-mode") === "day") {
+        container.classList.add("night");
+        container.classList.remove("day");
+        modes.dayNight.setAttribute("data-mode", "night");
+    } else {
+        container.classList.add("day");
+        container.classList.remove("night");
+        modes.dayNight.setAttribute("data-mode", "day");
+    }
+};
+
+gameState.modes.dayNight.addEventListener("click", (e) =>
+    modeToggle(gameState)
+);
+
 // Object that holds the gameBoard tiles elements:
 const gameBoardTiles = {
     0: "sky",

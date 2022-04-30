@@ -20,6 +20,7 @@ export const GameState = function () {
      */
     this.inventory = new Inventory();
     /**
+     * @description controlling day/night cycle
      * @type {Modes}
      */
     this.modes = new Modes();

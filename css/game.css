@@ -18,12 +18,10 @@ html {
 .container {
     width: 80%;
     height: 100vh;
-    background-color: #8dbfff;
     display: grid;
     grid-template-columns: repeat(27, 1fr);
 }
 
-/* TODO: fix gap between tiles */
 /* style each tile */
 .tile {
     outline: 1px solid transparent;
@@ -41,9 +39,6 @@ html {
 }
 
 /* style each tile type with different background image / color */
-[data-type="sky"] {
-    background: #8dbfff;
-}
 
 [data-type="cloud"] {
     background: #fff;
@@ -84,6 +79,14 @@ html {
     background-size: 60%;
 }
 
+.night {
+    background: #022e68;
+}
+
+.day {
+    background: #8dbfff;
+}
+
 [data-mode="day"] {
     background-image: url("../assets/img/day.png");
 }
@@ -91,6 +94,14 @@ html {
 [data-mode="night"] {
     background-image: url("../assets/img/night.png");
 }
+
+/* [data-mode="day"] {
+    background-image: url("../assets/img/day.png");
+}
+
+[data-mode="night"] {
+    background-image: url("../assets/img/night.png");
+} */
 
 /* style the tools and inventory */
 .flex-container {
