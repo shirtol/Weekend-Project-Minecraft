@@ -8,5 +8,5 @@ const ToolTypes = function () {
 
 export const Tools = function () {
     this.types = new ToolTypes();
-    this.selectedTool = null;
+    this.selectedTool = undefined;
 };

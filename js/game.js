@@ -195,11 +195,12 @@ const addToInventoryStack = (e, gameBoard, inventory) => {
  * @param {Object} Obj
  * @param {Tools} Obj.tools
  */
-const displayErrorTool = ({ tools }) => {
-    tools.types[tools.selectedTool].classList.add("fleshing-error");
+const displayErrorTool = ({ types, selectedTool }) => {
+    if (selectedTool === undefined) return;
+    types[selectedTool].classList.add("fleshing-error");
+
     setTimeout(
-        () =>
-            tools.types[tools.selectedTool].classList.remove("fleshing-error"),
+        () => types[selectedTool].classList.remove("fleshing-error"),
         1000
     );
 };
@@ -223,7 +224,7 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
                 addToInventoryStack(e, gameBoard, inventory);
             }
         } else {
-            displayErrorTool(gameState);
+            displayErrorTool(gameState.tools);
         }
     }
 };
