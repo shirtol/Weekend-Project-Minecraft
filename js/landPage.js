@@ -1,13 +1,39 @@
 import { createToolTileTable } from "./Tiles.js";
 
+/**
+ * @class
+ */
 const LandPage = function () {
+    /**
+     * @type {Node}
+     */
     this.startBtn = document.querySelector('[data-btnType="start"]');
+
+    /**
+     * @type {Node}
+     */
     this.instructionBtn = document.querySelector(
         '[data-btnType="instructions"]'
     );
+
+    /**
+     * @type {Node}
+     */
     this.howToPlay = document.querySelector(".how-to-play");
+
+    /**
+     * @type {string[]}
+     */
     this.worlds = ["israel", "australia", "hawaii"];
+
+    /**
+     * @type {Node}
+     */
     this.worldsContainer = document.querySelector(".worlds-container");
+
+    /**
+     * @type {() => NodeList}
+     */
     this.getWorlds = () => document.querySelectorAll("[data-worldType]");
 };
 
@@ -25,6 +51,12 @@ landPage.instructionBtn.addEventListener("click", () => {
         landPage.howToPlay.style.display === "flex" ? "none" : "flex";
 });
 
+/**
+ *
+ * @param {Object} Obj
+ * @param {Node} Obj.worldsContainer
+ * @param {string[]} Obj.worlds
+ */
 const addWorldsToContainer = ({ worldsContainer, worlds }) => {
     for (const world of worlds) {
         const worldEl = document.createElement("div");
