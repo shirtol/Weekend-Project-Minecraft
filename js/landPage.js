@@ -4,7 +4,7 @@ const LandPage = function () {
         '[data-btnType="instructions"]'
     );
     this.howToPlay = document.querySelector(".how-to-play");
-    this.worlds = ["regular", "island"];
+    this.worlds = ["israel", "australia"];
     this.worldsContainer = document.querySelector(".worlds-container");
     this.getWorlds = () => document.querySelectorAll("[data-worldType]");
 };

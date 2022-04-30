@@ -21,7 +21,7 @@
 
 
 */
-export const regular = [
+export const israel = [
     [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0,
@@ -105,7 +105,7 @@ export const regular = [
     ],
 ];
 
-export const island = [
+export const australia = [
     [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0,

@@ -1,4 +1,4 @@
-import { regular, island } from "./gameBoard.js";
+import { israel, australia } from "./gameBoard.js";
 import { Modes } from "./Modes.js";
 import { Tools } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
@@ -59,10 +59,10 @@ export const GameState = function (worldType) {
  */
 const getWorldByType = (selectedWorldType) => {
     switch (selectedWorldType) {
-        case "regular":
-            return regular;
-        case "island":
-            return island;
+        case "israel":
+            return israel;
+        case "australia":
+            return australia;
         default:
             throw new Error(`Incorrect world selected: ${selectedWorldType}`);
     }
