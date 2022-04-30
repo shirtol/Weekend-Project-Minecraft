@@ -34,6 +34,11 @@ export const GameState = function (worldType) {
      */
     this.validTile = [];
     /**
+     *
+     * @type {Node}
+     */
+    this.tilesCounter = document.querySelector(".tile-counter");
+    /**
      * @type {() => Node}
      */
     this.getTiles = () => document.querySelectorAll(".tile");

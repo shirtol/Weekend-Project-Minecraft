@@ -81,4 +81,8 @@
     [data-toolType="bucket"] {
         background-size: cover;
     }
+
+    .build-container span {
+        display: none;
+    }
 }

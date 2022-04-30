@@ -210,6 +210,12 @@ const displayErrorTool = ({ types, selectedTool }) => {
     );
 };
 
+// display counter error (when trying to build and the counter is zero)
+const displayErrorCount = (tilesCounter) => {
+    tilesCounter.classList.add("error-counter");
+    setTimeout(() => tilesCounter.classList.remove("error-counter"), 1000);
+};
+
 /**
  * @description garb a tile from the board:
  * @param {Event} e
@@ -218,7 +224,7 @@ const displayErrorTool = ({ types, selectedTool }) => {
  * @param {number[][]} Obj.gameBoard
  * @param {string[]} Obj.validTile
  */
-const mineTile = (e, { inventory, gameBoard, validTile }) => {
+const mineTile = (e, { inventory, gameBoard, validTile, tilesCounter }) => {
     const [currDataType, currPositionCol, currPositionRow] = getTileData(
         e.target
     );
@@ -227,6 +233,8 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
         if (validTile.indexOf(currDataType) !== -1) {
             if (canMine(gameBoard, currPositionRow, currPositionCol)) {
                 addToInventoryStack(e, gameBoard, inventory);
+                tilesCounter.textContent =
+                    parseInt(tilesCounter.textContent) + 1;
             }
         } else {
             displayErrorTool(gameState.tools);
@@ -241,7 +249,7 @@ const mineTile = (e, { inventory, gameBoard, validTile }) => {
  * @param {number[][]} Obj.gameBoard
  * @param {Inventory} Obj.inventory
  */
-const buildTile = (e, { gameBoard, inventory }) => {
+const buildTile = (e, { gameBoard, inventory, tilesCounter }) => {
     if (inventory.stack.length > 0) {
         const [currDataType, currPositionCol, currPositionRow] = getTileData(
             e.target
@@ -252,7 +260,10 @@ const buildTile = (e, { gameBoard, inventory }) => {
             gameBoard[currPositionRow][currPositionCol] |=
                 getTileNumber(inventoryLastTile);
             e.target.setAttribute("data-type", inventoryLastTile);
+            tilesCounter.textContent = parseInt(tilesCounter.textContent) - 1;
         }
+    } else {
+        displayErrorCount(tilesCounter);
     }
 };
 

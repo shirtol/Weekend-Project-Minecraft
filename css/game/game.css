@@ -161,6 +161,19 @@ html {
     cursor: pointer;
 }
 
+.build-container {
+    display: flex;
+    align-self: center;
+    color: #fff;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 2rem;
+}
+
+.build-container > * {
+    margin-right: 1rem;
+}
+
 .inventory {
     flex-shrink: 0;
 }
@@ -199,6 +212,7 @@ html {
     margin-bottom: 2rem;
 }
 
+/* for tools */
 .fleshing-error {
     animation: blink 0.2s step-end infinite alternate;
 }
@@ -206,5 +220,16 @@ html {
 @keyframes blink {
     50% {
         border-color: red;
+    }
+}
+
+/* for counter */
+.error-counter {
+    animation: flesh 0.2s step-end infinite alternate;
+}
+
+@keyframes flesh {
+    50% {
+        color: red;
     }
 }
