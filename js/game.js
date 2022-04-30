@@ -1,9 +1,9 @@
 import { Tools } from "./Tools.js";
 import { Inventory } from "./Inventory.js";
 import { GameState } from "./GameState.js";
-import { Sounds } from "./Sounds.js";
+import { MediaPlayer } from "./Sounds.js";
 
-const sounds = new Sounds();
+const mediaPlayer = new MediaPlayer();
 
 const params = new URLSearchParams(window.location.search);
 const paramsVal = params.get("worldType");
@@ -244,9 +244,11 @@ const mineTile = (e, { inventory, gameBoard, validTile, tilesCounter }) => {
                 addToInventoryStack(e, gameBoard, inventory);
                 tilesCounter.textContent =
                     parseInt(tilesCounter.textContent) + 1;
+                mediaPlayer.playSound(currDataType);
             }
         } else {
             displayErrorTool(gameState.tools);
+            mediaPlayer.playErrorSound(currDataType);
         }
     }
 };
@@ -265,13 +267,12 @@ const buildTile = (e, { gameBoard, inventory, tilesCounter }) => {
         );
 
         if (currDataType === "sky" || currDataType === "cloud") {
-            sounds.build.currentTime = 0;
             const inventoryLastTile = removeLastTile(gameState);
             gameBoard[currPositionRow][currPositionCol] |=
                 getTileNumber(inventoryLastTile);
             e.target.setAttribute("data-type", inventoryLastTile);
             tilesCounter.textContent = parseInt(tilesCounter.textContent) - 1;
-            sounds.build.play();
+            mediaPlayer.playSound(currDataType);
         }
     } else {
         displayErrorCount(tilesCounter);
