@@ -131,6 +131,13 @@ const addToInventory = (inventory, data) => {
 const isFirstRow = (tileRow) => tileRow === 0;
 
 /**
+ * @description check if tile is in the last row
+ * @param {number} tileRow
+ * @returns {boolean}
+ */
+const isLastRow = (tileRow, gameBoard) => tileRow === gameBoard.length;
+
+/**
  * @description check if tile has sky from bottom
  * @param {number[][]} gameBoard
  * @param {number} tileRow
@@ -169,7 +176,7 @@ const hasEmptyLeft = (gameBoard, tileRow, tileCol) =>
  * @returns {boolean}
  */
 const hasEmptyRight = (gameBoard, tileRow, tileCol) =>
-    gameBoard[tileRow][tileCol + 1] === 0;
+    gameBoard[tileRow][tileCol + 1] in [0, 1];
 
 /**
  * @description check if the user can mine the tile
@@ -184,6 +191,20 @@ const canMine = (gameBoard, tileRow, tileCol) =>
     hasEmptyTop(gameBoard, tileRow, tileCol) ||
     hasEmptyRight(gameBoard, tileRow, tileCol) ||
     hasEmptyLeft(gameBoard, tileRow, tileCol);
+
+/**
+ * @description check if the user can build the tile
+ * @param {number[][]} gameBoard
+ * @param {number} tileRow
+ * @param {number} tileCol
+ * @returns {boolean}
+ */
+const canBuild = (gameBoard, tileRow, tileCol) =>
+    isLastRow(tileRow, gameBoard) ||
+    !hasEmptyBottom(gameBoard, tileRow, tileCol) ||
+    !hasEmptyTop(gameBoard, tileRow, tileCol) ||
+    !hasEmptyRight(gameBoard, tileRow, tileCol) ||
+    !hasEmptyLeft(gameBoard, tileRow, tileCol);
 
 /**
  * @description get tile number from gameBoardTiles object
@@ -277,12 +298,15 @@ const buildTile = (e, { gameBoard, inventory, tilesCounter }) => {
         );
 
         if (currDataType === "sky" || currDataType === "cloud") {
-            const inventoryLastTile = removeLastTile(gameState);
-            gameBoard[currPositionRow][currPositionCol] |=
-                getTileNumber(inventoryLastTile);
-            e.target.setAttribute("data-type", inventoryLastTile);
-            tilesCounter.textContent = parseInt(tilesCounter.textContent) - 1;
-            mediaPlayer.playSound(currDataType);
+            if (canBuild(gameBoard, currPositionRow, currPositionCol)) {
+                const inventoryLastTile = removeLastTile(gameState);
+                gameBoard[currPositionRow][currPositionCol] |=
+                    getTileNumber(inventoryLastTile);
+                e.target.setAttribute("data-type", inventoryLastTile);
+                tilesCounter.textContent =
+                    parseInt(tilesCounter.textContent) - 1;
+                mediaPlayer.playSound(currDataType);
+            }
         }
     } else {
         displayErrorCount(tilesCounter);
