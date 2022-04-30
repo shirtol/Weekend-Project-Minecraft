@@ -86,16 +86,16 @@ html {
 }
 
 [data-type="rock"] {
-    background-image: url("../../assets/img/tiles/rock.png");
+    background-image: url("../../assets/img/tiles/rock.webp");
 }
 [data-type="wood"] {
-    background-image: url("../../assets/img/tiles/wood.jpg");
+    background-image: url("../../assets/img/tiles/wood.webp");
 }
 [data-type="grass"] {
-    background-image: url("../../assets/img/tiles/grass.jpg");
+    background-image: url("../../assets/img/tiles/grass.webp");
 }
 [data-type="dirt"] {
-    background-image: url("../../assets/img/tiles/dirt.jpg");
+    background-image: url("../../assets/img/tiles/dirt.webp");
 }
 
 [data-type="water"] {
@@ -105,7 +105,7 @@ html {
     background-image: url("../../assets/img/tiles/lava.webp");
 }
 [data-type="basalt"] {
-    background-image: url("../../assets/img/tiles/basalt.png");
+    background-image: url("../../assets/img/tiles/basalt.webp");
 }
 
 /* style day and night feature */
@@ -128,7 +128,7 @@ html {
 }
 
 .night {
-    background-image: url("../../assets/img/tiles/night.png");
+    background-image: url("../../assets/img/tiles/night.webp");
 }
 
 [data-type="cloud"].night-tile {
